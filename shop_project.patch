@@ -1,0 +1,3660 @@
+Index: src/router/router.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/router/router.js	(revision 30)
++++ src/router/router.js	(date 1525681213818)
+@@ -8,6 +8,15 @@
+         title: 'Login - 登录'
+     },
+     component: () => import('@/views/login.vue')
++    // component: () => import('@/views/register/protocol.vue')
++};
++export const registerRouter = {
++    path: '/register',
++    name: 'register',
++    meta: {
++        title: '商家注册'
++    },
++    component: () => import('@/views/register/protocol.vue')
+ };
+ 
+ export const page404 = {
+@@ -62,16 +71,16 @@
+     children: [
+         { path: 'home', title: {i18n: 'home'}, name: 'home_index', component: () => import('@/views/home/home.vue') },
+         { path: 'ownspace', title: '个人中心', name: 'ownspace_index', component: () => import('@/views/own-space/own-space.vue') },
+-        { path: 'message', title: '消息中心', name: 'message_index', component: () => import('@/views/message/message.vue') }/*
+-        { path: 'order/:order_id', title: '订单详情', name: 'order_info', component: () => import('@/views/order/info.vue') },
+-        { path: 'finance/:reportId', title: '财务报表明细', name: 'finance_info', component: () => import('@/views/finance/info.vue') },
+-        */
++        { path: 'message', title: '消息中心', name: 'message_index', component: () => import('@/views/message/message.vue') },
++        { path: 'finance/:reportId', title: '财务报表明细', name: 'finance_info', component: () => import('@/views/finance/finance_info.vue') },
++        { path: 'order/:order_id', title: '订单详情', name: 'order_info', component: () => import('@/views/order/order_info.vue') },
++        { path: 'order/:order_id', title: '退款详情', name: 'refund_info', component: () => import('@/views/order/refund_info.vue') }
+     ]
+ };
+ 
+ // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
+ export const appRouter = [
+-	{
++    {
+         path: '/shop',
+         icon: 'social-skype-outline',
+         name: 'shop',
+@@ -133,10 +142,12 @@
+ export const routers = [
+     loginRouter,
+     otherRouter,
++    registerRouter,
+     locking,
+     ...appRouter,
+     page500,
+     page401,
+     page403,
+     page404
++
+ ];
+\ No newline at end of file
+Index: src/styles/upload.less
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/styles/upload.less	(revision 30)
++++ src/styles/upload.less	(date 1524826882269)
+@@ -12,6 +12,9 @@
+     box-shadow: 0 1px 1px rgba(0,0,0,.2);
+     margin-right: 4px;
+ }
++.ivu-form-item-content{
++    margin-left: 75px !important;
++}
+ 
+ .upload-list-cover{
+     display: none;
+Index: src/views/finance/finance_info.vue
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/views/finance/finance_info.vue	(date 1525681198682)
++++ src/views/finance/finance_info.vue	(date 1525681198682)
+@@ -0,0 +1,139 @@
++<template>
++    <div>
++        <Row>
++            <Card>
++                <p slot="title">
++                    <Icon type="ios-pulse-strong"></Icon>
++                    报表汇总
++                </p>
++                <Form :label-width="100">
++                    <Row>
++                        <Col span="8">
++                            <FormItem label="商家ID"><strong>{{detailform.mc_id}} </strong></FormItem>
++                        </Col>
++                        <Col span="8">
++                            <FormItem label="结算日期"><strong>{{detailform.balance_day}}</strong></FormItem>
++                        </Col>
++                        <Col span="8">
++                            <FormItem label="结算状态"><strong>{{detailform.status}}</strong></FormItem>
++                        </Col>
++                    </Row>
++                    <Row>
++                        <Col span="8">
++                            <FormItem label="总金额"><strong>{{detailform.total_price/100}}（元） </strong></FormItem>
++                        </Col>
++                        <Col span='8'>
++                            <FormItem label="抽成金额"><strong>{{detailform.cut_price/100}}（元）</strong></FormItem>
++                        </Col>
++                        <Col span="8">
++                            <FormItem label="结算金额"><strong>{{detailform.actual_price/100}}（元）</strong></FormItem>
++                        </Col>
++                    </Row>
++                </Form>
++            </Card>
++        </Row>
++        <Row style="margin-top: 10px;">
++            <Card>
++                <p slot="title">
++                    <Icon type="clipboard"></Icon>
++                    订单详情
++                </p>
++                <Table :data="data" :columns="columns" border></Table>
++            </Card>
++        </Row>
++    </div>
++</template>
++
++<script>
++    export default {
++        name: 'finance_info',
++        data () {
++            return {
++                reportId: '',
++                columns: [
++                    {
++                        key: 'order_id',
++                        align: 'center',
++                        title: '订单编号'
++                    },
++                    {
++                        key: 'price',
++                        align: 'right',
++                        title: '订单金额',
++                        render: (h, params) => {
++                            const row = params.row;
++                            const money = (row.price / 100).toFixed(2);
++
++                            return h('strong', money);
++                        }
++                    },
++                    {
++                        key: 'cut_price',
++                        align: 'right',
++                        title: '抽成金额',
++                        render: (h, params) => {
++                            const row = params.row;
++                            const money = (row.cut_price / 100).toFixed(2);
++
++                            return h('strong', money);
++                        }
++                    },
++                    {
++                        key: 'actual_price',
++                        align: 'right',
++                        title: '实际结算金额',
++                        render: (h, params) => {
++                            const row = params.row;
++                            const money = (row.actual_price / 100).toFixed(2);
++
++                            return h('strong', money);
++                        }
++                    },
++                    {
++                        key: 'complete_time',
++                        align: 'center',
++                        title: '订单完成时间'
++                    }
++                ],
++                data: [],
++                detailform: {
++                    mc_id: '',
++                    balance_day: '',
++                    status: '',
++                    total_price: '',
++                    cut_price: '',
++                    actual_price: ''
++                }
++            };
++        },
++        mounted () {
++            this.init();
++        },
++        methods: {
++            init () {
++                this.reportId = this.$route.params.reportId;
++                this.getDetail();
++            },
++            getDetail () {
++                this.$http.get('/finance/detail?report_id=' + this.reportId).then(
++                    function (resp) {
++                        if (resp.data.code === '000') {
++                            this.detailform.mc_id = resp.data.record.mc_id;
++                            this.detailform.balance_day = resp.data.record.balance_day;
++                            this.detailform.status = resp.data.record.status === 1 ? '已结算' : '未结算';
++                            this.detailform.total_price = resp.data.record.total_price;
++                            this.detailform.cut_price = resp.data.record.cut_price;
++                            this.detailform.actual_price = resp.data.record.actual_price;
++
++                            if (resp.data.details) {
++                                this.data = resp.data.details;
++                            }
++                        } else {
++                            this.$Message.error(resp.data.msg);
++                        }
++                    }.bind(this)
++                );
++            }
++        }
++    };
++</script>
+Index: src/views/finance/financeindex.vue
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/views/finance/financeindex.vue	(revision 30)
++++ src/views/finance/financeindex.vue	(date 1525683160074)
+@@ -14,12 +14,12 @@
+                     <Row>
+                         <Form ref="searchform" :model="searchform" inline>
+                             <FormItem label="结算月" :label-width="60">
+-                                <DatePicker type="month" placeholder="选择日期" v-model="searchform.balance_day"
++                                <DatePicker type="month" placeholder="选择日期"
+                                             @on-change="dateChange"></DatePicker>
+                             </FormItem>
+                             <FormItem style="padding-left: -20px;">
+-                                <Button @click="" type="primary" icon="search">搜索</Button>
+-                                <Button @click="" type="ghost">取消</Button>
++                                <Button @click="search" type="primary" icon="search">搜索</Button>
++                                <Button @click="cancelSearch" type="ghost">取消</Button>
+                             </FormItem>
+                             <FormItem>
+                                 <div style="color:red;margin-top:10px;">注意：每月1号、16号为账单结算日期</div>
+@@ -30,8 +30,9 @@
+                         <Table :data="data" :columns="columns" border></Table>
+                     </Row>
+                     <Row class="margin-top-10">
+-                        <Page :total.sync="total" :page-size="20" :current.sync="pageNumber" @on-change="setPageNum"
+-                              show-elevator show-total></Page>
++                        <Page :total.sync="total" :page-size="pageSize" :current.sync="pageNumber"
++                              @on-change="setPageNum"
++                              show-elevator show-total show-sizer @on-page-size-change="setPageSize"></Page>
+                     </Row>
+                 </Card>
+             </Col>
+@@ -40,11 +41,11 @@
+ </template>
+ 
+ <script>
+-
+     export default {
+         name: 'finance_index',
+-        data() {
++        data () {
+             return {
++                pageSize: 20,
+                 total: 0,
+                 pageNumber: 1,
+                 height: 590,
+@@ -87,9 +88,11 @@
+                     },
+                     {
+                         title: '结算标志',
++                        align: 'center',
+                         key: 'status',
+-                        render(row, column, index) {
+-                            if (row.status == '0') {
++                        render (h, params) {
++                            const row = params.row;
++                            if (row.status === '0') {
+                                 return '未结算';
+                             } else {
+                                 return '已结算';
+@@ -108,37 +111,69 @@
+                         title: '操作',
+                         width: 220,
+                         render: (h, params) => {
+-                            let view = h('Button', {
+-                                props: {
+-                                    type: 'success',
+-                                    size: 'small',
+-                                },
+-                                style: {
+-                                    marginRight: '5px'
+-                                },
+-                                on: {
+-                                    click: () => {
+-                                        this.edit(params.row);
+-                                    }
+-                                }
+-                            }, '明细')
+-                            return h('div', [view]);
++                            let row = params.row;
++                            if (row.status) {
++                                return h('div', [
++                                    h('Button', {
++                                        props: {
++                                            type: 'info',
++                                            size: 'small'
++                                        },
++                                        on: {
++                                            click: () => {
++                                                let argu = {reportId: row.report_id};
++                                                this.$router.push({
++                                                    name: 'finance_info',
++                                                    params: argu
++                                                });
++                                            }
++                                        }
++                                    }, '明细')
++                                ]);
++                            }
+                         }
+                     }
+-                ],
++                ]
+             };
+         },
+         methods: {
+-            dateChange(value) {
+-                this.$refs['searchform'].model.balance_day = value;
++            search () {
++                this.getData();
++            },
++            cancelSearch () {
++                this.searchform.balance_day = '';
++                this.getData();
++            },
++            getData () {
++                let params = this.searchform;
++                params['pageNumber'] = this.pageNumber;
++                params['pageSize'] = this.pageSize;
++                this.$http.get('/finance/list', {
++                    params: params
++                }).then(
++                    function (resp) {
++                        if (resp.data.code === '000') {
++                            this.data = resp.data.result;
++                            this.total = resp.data.total;
++                        } else {
++                            this.$Message.error(resp.data.msg);
++                        }
++                    }.bind(this));
++            },
++            setPageSize (size) {
++                this.pageSize = size;
++                this.getData();
++            },
++            dateChange (value) {
++                this.searchform.balance_day = value;
+             },
+-            setPageNum() {
+-                console.log('显示页数')
++            setPageNum (num) {
++                this.pageNumber = num;
++                this.getData();
+             }
+-        },
+-        created() {
+         },
+-        mounted() {
++        mounted () {
++            this.getData();
+         }
+     };
+ </script>
+\ No newline at end of file
+Index: src/views/goods/goodsment.vue
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/views/goods/goodsment.vue	(revision 30)
++++ src/views/goods/goodsment.vue	(date 1525684010435)
+@@ -5,7 +5,7 @@
+ </style>
+ 
+ <template>
+-    <div >
++    <div>
+         <Row>
+             <Col span="24">
+                 <Card class="set_store">
+@@ -19,43 +19,40 @@
+                     <Row>
+                         <Form ref="searchForm" :model="searchform" inline>
+                             <FormItem label="商品名称" :label-width="60">
+-                                <Input v-model="searchform.title" placeholder="请输入商品名称查询"/>
++                                <Input v-model="searchform.goods_title" placeholder="请输入商品名称查询"/>
+                             </FormItem>
+                             <FormItem label="商品状态" :label-width="60">
+-                                <Select v-model="searchform.failure" placeholder="请选择" style="width:150px;">
++                                <Select v-model="searchform.goods_status" placeholder="请选择" style="width:150px;">
+                                     <Option v-for="item in failures" :value="item.value" :key="item.value">{{item.label
+                                         }}
+                                     </Option>
+                                 </Select>
+                             </FormItem>
+                             <FormItem label="是否上架" :label-width="60">
+-                                <Select v-model="searchform.togo" placeholder="请选择" style="width:150px;">
++                                <Select v-model="searchform.is_on" placeholder="请选择" style="width:150px;">
+                                     <Option v-for="item in togos" :value="item.value" :key="item.value">{{item.label
+                                         }}
+                                     </Option>
+                                 </Select>
+                             </FormItem>
+                             <FormItem style="padding-left: -20px;">
+-                                <Button @click="" type="primary" icon="search">搜索</Button>
+-                                <Button @click="" type="ghost">取消</Button>
++                                <Button @click="search" type="primary" icon="search">搜索</Button>
++                                <Button @click="cancelSearch" type="ghost">取消</Button>
+                             </FormItem>
+                         </Form>
+                     </Row>
+                     <Row>
+                         <Table :data="data" :columns="columns" border></Table>
+-                        <!--<Col span="24">-->
+-                            <!--<can-edit-table refs="table" :height="height" v-model="data" @on-delete="remove" @on-edit="edit" @on-shelves="shelves"-->
+-                                            <!--:columns-list="columns"></can-edit-table>-->
+-                        <!--</Col>-->
+                     </Row>
+                     <Row class="margin-top-10">
+-                        <Page :total.sync="total" :page-size="20" :current.sync="pageNumber" @on-change="setPageNum"
+-                              show-elevator show-total></Page>
++                        <Page :total.sync="total" :page-size="pageSize" :current.sync="pageNumber"
++                              @on-change="setPageNum"
++                              show-elevator show-total show-sizer @on-page-size-change="setPageSize"></Page>
+                     </Row>
+                 </Card>
+             </Col>
+         </Row>
+-        <Modal v-model="showAdd" :title.sync="modalTitle" width="800" scrollable>
++        <Modal v-model="showAdd" @on-ok="save" @on-cancel="cancel" :title.sync="modalTitle" width="800" scrollable>
+             <Form :label-width="70" ref="addForm" :model="addform" :rules="rules">
+                 <Row>
+                     <Col span="8">
+@@ -74,8 +71,8 @@
+                 </Row>
+                 <Row>
+                     <Col span="24">
+-                        <FormItem label="商品标题" prop="goods_shop">
+-                            <Input v-model="addform.goods_shop" placeholder="请输入商品标题"/>
++                        <FormItem label="商品标题" prop="goods_title">
++                            <Input v-model="addform.goods_title" placeholder="请输入商品标题"/>
+                         </FormItem>
+                     </Col>
+                 </Row>
+@@ -216,9 +213,13 @@
+                     <Col span="24">
+                         <FormItem label="商品备注">
+                             <Input v-model="addform.shopintrod" type="textarea"
+-                                   :autosize="{minRows: 2,maxRows: 5}"></Input>
++                                   :autosize="{minRows: 2,maxRows: 5}"/>
+                         </FormItem>
+                     </Col>
++                </Row>
++                <Row slot="footer">
++                    <Button type="text" @click="cancel">取消</Button>
++                    <Button type="primary" @click="save">确定</Button>
+                 </Row>
+             </Form>
+         </Modal>
+@@ -228,15 +229,11 @@
+     </div>
+ </template>
+ <script>
+-    // import tableData from '../spec/common/data.js';
+-    // import canEditTable from '../spec/common/canEditTable.vue';
+     export default {
+         name: 'goods_index',
+-        // components: {
+-        //     canEditTable
+-        // },
+-        data() {
++        data () {
+             return {
++                pageSize: 20,
+                 action: '',
+                 uploadList: [],
+                 uploadList2: [],
+@@ -244,9 +241,12 @@
+                 imgName: '',
+                 visible: false,
+                 addform: {
++                    goods_thumb: '',
++                    goods_img: '',
++                    goods_desc: '',
+                     leimu: '',
+                     yeson: 0,
+-                    goods_shop: '',
++                    goods_title: '',
+                     goods_num: '',
+                     goods_code: '',
+                     goods_one: 0,
+@@ -260,7 +260,7 @@
+                     yeson: [
+                         {required: true, message: '请选择', trigger: 'blur'}
+                     ],
+-                    goods_shop: [
++                    goods_title: [
+                         {required: true, message: '请输入商品标题', trigger: 'blur'}
+                     ],
+                     goods_one: [
+@@ -281,7 +281,7 @@
+                 },
+                 isYes: [
+                     {value: '0', label: '否'},
+-                    {value: '1', label: '是'},
++                    {value: '1', label: '是'}
+                 ],
+                 showAdd: false,
+                 modalTitle: '添加',
+@@ -296,49 +296,49 @@
+                         align: 'center'
+                     },
+                     {
+-                        key: 'number',
++                        key: 'goods_id',
+                         align: 'center',
+                         title: '商品编号',
+-                        width:120
++                        width: 120
+                     },
+                     {
+-                        key: 'title',
++                        key: 'goods_title',
+                         align: 'center',
+                         title: '商品名称',
+-                        ellipsis:true
++                        ellipsis: true
+                     },
+                     {
+-                        key: 'validity',
++                        key: 'goods_stocks',
+                         align: 'center',
+                         title: '总库存',
+-                        width:120
++                        width: 120
+                     },
+                     {
+                         title: '状态',
+                         key: 'goods_status',
+-                        align:'center',
+-                        width:110,
+-                        render(row,column,index){
+-                            if(row.goods_status==0){
+-                                return '待审核';
+-                            }else if(row.goods_status==1){
+-                                return '通过';
+-                            }else{
+-                                return '拒绝';
+-                            }
++                        align: 'center',
++                        width: 130,
++                        render: (h, params) => {
++                            const row = params.row;
++                            const color = row.goods_status === 0 ? 'blue' : row.goods_status === 1 ? 'green' : 'red';
++                            const text = row.goods_status === 0 ? '待审核' : row.goods_status === 1 ? '通过' : '拒绝';
++                            return h('p', {
++                                props: {
++                                    // type: 'dot',
++                                    color: color
++                                }
++                            }, text);
+                         }
+                     },
+                     {
+                         title: '是否上架',
+                         key: 'is_on',
+-                        width:110,
+-                        align:'center',
+-                        render(row,column,index){
+-                            if(row.is_on==0){
+-                                return '否';
+-                            }else{
+-                                return '是';
+-                            }
++                        width: 110,
++                        align: 'center',
++                        render: (h, params) => {
++                            const row = params.row;
++                            const text = row.is_on === 0 ? '否' : '是';
++                            return text;
+                         }
+                     },
+                     {
+@@ -356,7 +356,7 @@
+                             let edit = h('Button', {
+                                 props: {
+                                     type: 'success',
+-                                    size: 'small',
++                                    size: 'small'
+                                 },
+                                 style: {
+                                     marginRight: '5px'
+@@ -376,7 +376,7 @@
+                                 },
+                                 on: {
+                                     'on-ok': () => {
+-                                        this.remove(params.row.points_goods_id);
++                                        this.remove(params.row.goods_id);
+                                         this.data.splice(params.index, 1);
+                                     }
+                                 }
+@@ -396,14 +396,14 @@
+                             let on = h('Button', {
+                                 props: {
+                                     type: 'primary',
+-                                    size: 'small',
++                                    size: 'small'
+                                 },
+                                 style: {
+                                     marginRight: '5px'
+                                 },
+                                 on: {
+                                     click: () => {
+-                                        this.onOff(params.row.points_goods_id, true);
++                                        this.onOff(params.row.goods_id, true);
+                                     }
+                                 }
+                             }, '上架');
+@@ -411,41 +411,34 @@
+                             let off = h('Button', {
+                                 props: {
+                                     type: 'warning',
+-                                    size: 'small',
++                                    size: 'small'
+                                 },
+                                 style: {
+                                     marginRight: '5px'
+                                 },
+                                 on: {
+                                     click: () => {
+-                                        this.onOff(params.row.points_goods_id, false);
++                                        this.onOff(params.row.goods_id, false);
+                                     }
+                                 }
+                             }, '下架');
+ 
+-                            if (params.row.is_on === '0') {
+-                                return h('div', [ edit, remove, on]);
+-                            } else {
+-                                return h('div', [ edit, remove, off]);
++                            if (params.row.is_on === 0 && params.row.goods_status === 1) {
++                                return h('div', [edit, remove, on]);
++                            } else if (params.row.is_on === 1) {
++                                return h('div', [edit, remove, off]);
++                            } else {
++                                return h('div', [edit, remove]);
+                             }
+                         }
+                     }
+                 ],
+                 searchform: {
+-                    title: '',
+-                    failure: '',
+-                    togo: ''
++                    goods_title: '',
++                    goods_status: '',
++                    is_on: ''
+                 },
+-                data: [
+-                    {
+-                        number: '123',
+-                        title: 'iphone8一万台',
+-                        validity: '1',
+-                        goods_status: '0',
+-                        is_on: '0',
+-                        goods_ct: '不知道'
+-                    }
+-                ],
++                data: [],
+                 failures: [
+                     {value: '', label: '全部'},
+                     {value: '0', label: '待审核'},
+@@ -460,53 +453,125 @@
+             };
+         },
+         methods: {
+-            handleView(url) {
++            onOff (goodsId, isOn) {
++                let url = '/goods/on';
++                if (!isOn) {
++                    url = '/goods/off';
++                }
++                this.$http.post(url, {goods_id: goodsId}).then(
++                    function (resp) {
++                        if (resp.data.code === '000') {
++                            this.$Message.success(resp.data.msg);
++                            this.getData();
++                        } else {
++                            this.$Message.error(resp.data.msg);
++                        }
++                    }.bind(this)
++                );
++            },
++            save () {
++                this.$refs.addForm.validate((valid) => {
++                    if (valid) {
++                        let data = this.addform;
++                        this.$http.post('/goods/save', data).then(
++                            function (resp) {
++                                if (resp.data.code === '000') {
++                                    this.$Message.success(resp.data.msg);
++                                    // this.showAdd = false;
++                                    // this.$refs.addForm.resetFields();
++                                    // this.getData();
++                                } else {
++                                    this.$Message.error(resp.data.msg);
++                                }
++                            }.bind(this)
++                        );
++                    } else {
++                        this.$Message.error('请输入内容!');
++                    }
++                });
++            },
++            cancel () {
++                this.showAdd = false;
++                this.$refs.addForm.resetFields();
++            },
++            search () {
++                this.getData();
++            },
++            cancelSearch () {
++                this.searchform.goods_title = '';
++                this.searchform.goods_status = '';
++                this.searchform.is_on = '';
++                this.getData();
++            },
++            getData () {
++                let params = this.searchform;
++                params['pageNumber'] = this.pageNumber;
++                params['pageSize'] = this.pageSize;
++                this.$http.get('/goods/list', {
++                    params: params
++                }).then(
++                    function (resp) {
++                        // console.log(resp)
++                        if (resp.data.code === '000') {
++                            this.data = resp.data.result;
++                            this.total = resp.data.total;
++                        } else {
++                            this.$Message.error(resp.data.msg);
++                        }
++                    }.bind(this)
++                );
++            },
++            setPageSize (size) {
++                this.pageSize = size;
++                this.getData();
++            },
++            handleView (url) {
+                 this.imgName = url;
+                 this.visible = true;
+             },
+-            handleRemove(file) {
++            handleRemove (file) {
+                 const fileList = this.uploadList;
+                 this.uploadList.splice(fileList.indexOf(file), 1);
+             },
+-            handleRemovegoodimg(file) {
++            handleRemovegoodimg (file) {
+                 const fileList = this.uploadList2;
+                 this.uploadList2.splice(fileList.indexOf(file), 1);
+             },
+-            handleRemovedetails(file) {
++            handleRemovedetails (file) {
+                 const fileList = this.uploadList2;
+                 this.uploadList2.splice(fileList.indexOf(file), 1);
+             },
+-            handleSuccess(response, file, fileList) {
++            handleSuccess (response, file, fileList) {
+                 file.url = response.filePath;
+                 file.name = response.fileName;
+-                this.addform.cover = response.fileName;
++                this.addform.goods_thumb = response.fileName;
+                 this.uploadList = fileList;
+             },
+-            handleSuccess2(response, file, fileList) {
++            handleSuccess2 (response, file, fileList) {
+                 file.url = response.filePath;
+                 file.name = response.fileName;
+-                this.addform.content = response.fileName;
++                this.addform.goods_img = response.fileName;
+                 this.uploadList2 = fileList;
+             },
+-            handleSuccess3(response, file, fileList) {
++            handleSuccess3 (response, file, fileList) {
+                 file.url = response.filePath;
+                 file.name = response.fileName;
+-                this.addform.content = response.fileName;
++                this.addform.goods_desc = response.fileName;
+                 this.uploadList3 = fileList;
+             },
+-            handleFormatError(file) {
++            handleFormatError (file) {
+                 this.$Notice.warning({
+                     title: '图片格式不正确。',
+                     desc: file.name + ' 不是jpg文件或者png文件.'
+                 });
+             },
+-            handleMaxSize(file) {
++            handleMaxSize (file) {
+                 this.$Notice.warning({
+                     title: 'Exceeding file size limit',
+                     desc: '文件 ' + file.name + ' 太大，不能超过2M。'
+                 });
+             },
+-            handleBeforeUpload() {
++            handleBeforeUpload () {
+                 const check = this.uploadList.length < 1;
+                 if (!check) {
+                     this.$Notice.warning({
+@@ -515,7 +580,7 @@
+                 }
+                 return check;
+             },
+-            handleBeforeUpload2() {
++            handleBeforeUpload2 () {
+                 const check = this.uploadList2.length < 1;
+                 if (!check) {
+                     this.$Notice.warning({
+@@ -524,7 +589,7 @@
+                 }
+                 return check;
+             },
+-            handleBeforeUpload3() {
++            handleBeforeUpload3 () {
+                 const check = this.uploadList2.length < 9;
+                 if (!check) {
+                     this.$Notice.warning({
+@@ -533,27 +598,38 @@
+                 }
+                 return check;
+             },
+-            add() {
+-                this.showAdd = true
++            add () {
++                this.showAdd = true;
+             },
+-            remove() {
+-                console.log( '删除' )
++            remove (goodsId) {
++                this.$http.post('/goods/remove', {goods_id: goodsId}).then(
++                    function (resp) {
++                        if (resp.data.code === '000') {
++                            this.$Message.success(resp.data.msg);
++                            this.getData();
++                        } else {
++                            this.$Message.error(resp.data.msg);
++                        }
++                    }.bind(this)
++                );
+             },
+-            edit() {
+-                console.log( '编辑' )
++            edit () {
++
+             },
+-            off() {
+-                console.log( '设置属性' )
++            off () {
++
+             },
+-            setPageNum() {
+-                console.log('显示页数')
++            setPageNum (num) {
++                this.pageNumber = num;
++                this.getData();
+             }
+         },
+-        created() {
++        created () {
+             // this.columns = tableData.columnsgood;
+         },
+-        mounted() {
+-            this.action = this.$http.defaults.baseURL + "/promot/upload";
++        mounted () {
++            this.action = this.$http.defaults.baseURL + '/upload';
++            this.getData();
+         }
+     };
+ </script>
+\ No newline at end of file
+Index: src/views/home/home.vue
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/views/home/home.vue	(revision 30)
++++ src/views/home/home.vue	(date 1525681198805)
+@@ -4,75 +4,81 @@
+ </style>
+ <template>
+     <div class="home-main">
+-    	<Row :gutter="10" class="margin-top-10">
+-    		<Col span="24">
+-    			<Card>
++        <Row :gutter="10" class="margin-top-10">
++            <Col span="24">
++                <Card>
+                     <p slot="title" class="card-title">
+-                        <Icon type="bookmark"></Icon>  店铺信息
++                        <Icon type="bookmark"></Icon>
++                        店铺信息
+                     </p>
+                     <Row>
+-		                <Col span="4">
+-		                    <img src="../../images/365.png" alt="">
+-		                </Col>
+-		                <Col :pull="2" span="8">
+-		                    <div style="cursor: pointer;" @click="tosetshop">
+-		                        <p  style="padding-top:10px;">店铺名称：{{ sp_name }}</p>
+-		                        <p style="padding-top:5px;">店铺地址：{{ sp_province }}{{ sp_city }}{{ sp_area }}{{ sp_addr }}</p>
+-		                        <p style="padding-top:5px;">注册日期：{{ ct.split(" ")[0] }}</p>
+-		                    </div>
+-		                </Col>
+-			            <Col class="star_five" span="6">
+-			                <h3>综合评价</h3>
+-			                <p>服务态度&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Rate disabled v-model="valueDisabled"></Rate></p>
+-			                <p>用户满意度&nbsp;&nbsp;<Rate disabled v-model="valueDisicon"></Rate></p>
+-			            </Col>
+-			            <Col class="store_status" span="6">
+-			                <h3>店铺状态</h3>
+-			                <h2 class="audit_status">
+-			                    <p style="color: #657180;" href="">{{ sp_status == '0' ? '待审核' : ( sp_status=='1' ? '审核通过' : '未通过审核' )}}</p>
+-			                </h2>
+-			            </Col>
++                        <Col span="4">
++                            <img src="../../images/365.png" alt="">
++                        </Col>
++                        <Col :pull="2" span="8">
++                            <div style="cursor: pointer;" @click="tosetshop">
++                                <p style="padding-top:10px;">店铺名称：{{ sp_name }}</p>
++                                <p style="padding-top:5px;">店铺地址：{{ sp_province }}{{ sp_city }}{{ sp_area }}{{ sp_addr
++                                    }}</p>
++                                <p style="padding-top:5px;">注册日期：{{ ct.split(" ")[0] }}</p>
++                            </div>
++                        </Col>
++                        <Col class="star_five" span="6">
++                            <h3>综合评价</h3>
++                            <p>服务态度&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Rate disabled v-model="valueDisabled"></Rate>
++                            </p>
++                            <p>用户满意度&nbsp;&nbsp;<Rate disabled v-model="valueDisicon"></Rate>
++                            </p>
++                        </Col>
++                        <Col class="store_status" span="6">
++                            <h3>店铺状态</h3>
++                            <h2 class="audit_status">
++                                <p style="color: #657180;" href="">{{ sp_status == '0' ? '待审核' : ( sp_status=='1' ?
++                                    '审核通过' : '未通过审核' )}}</p>
++                            </h2>
++                        </Col>
+                     </Row>
+                 </Card>
+-    		</Col>
+-    	</Row>
++            </Col>
++        </Row>
+         <Row :gutter="10" class="margin-top-10">
+             <Col span="12">
+-            	<Row :gutter="5">
+-    				<Col span="8">
+-    					<infor-card
+-                            id-name="pendAudit_count"
+-                            :end-val="count.pendAudit"
+-                            iconType="person-stalker"
+-                            color="#2d8cf0"
+-                            intro-text="待审核商品"></infor-card>
+-    				</Col>
+-    				<Col span="8">
+-    					<infor-card
+-                            id-name="pendIsOn_count"
+-                            :end-val="count.pendIsOn"
+-                            iconType="podium"
+-                            color="#64d572"
+-                            :iconSize="50"
+-                            intro-text="待上架商品"></infor-card>
+-    				</Col>
+-    				<Col span="8">
+-    					 <infor-card
+-                            id-name="onSale_count"
+-                            :end-val="count.onSale"
+-                            iconType="social-yen"
+-                            color="#ffd572"
+-                            intro-text="出售中商品"
++                <Row :gutter="5">
++                    <Col span="8">
++                        <infor-card
++                                id-name="pendAudit_count"
++                                :end-val="count.pendAudit"
++                                iconType="person-stalker"
++                                color="#2d8cf0"
++                                intro-text="待审核商品"></infor-card>
++                    </Col>
++                    <Col span="8">
++                        <infor-card
++                                id-name="pendIsOn_count"
++                                :end-val="count.pendIsOn"
++                                iconType="podium"
++                                color="#64d572"
++                                :iconSize="50"
++                                intro-text="待上架商品"></infor-card>
++                    </Col>
++                    <Col span="8">
++                        <infor-card
++                                id-name="onSale_count"
++                                :end-val="count.onSale"
++                                iconType="social-yen"
++                                color="#ffd572"
++                                intro-text="出售中商品"
+                         ></infor-card>
+-    				</Col>
+-                        
++                    </Col>
++
+                 </Row>
+                 <Row class="margin-top-10">
+-            		<Card>
+-            			<p slot="title" class="card-title">
+-                        	<Icon type="calendar"></Icon> 待处理订单
+-                    	</p>
+-                    	<Row>
++                    <Card>
++                        <p slot="title" class="card-title">
++                            <Icon type="calendar"></Icon>
++                            待处理订单
++                        </p>
++                        <Row>
+                             <Col span='8'>
+                                 <span class="font_size">待付款：{{ pendPay }}</span>
+                             </Col>
+@@ -101,45 +107,47 @@
+                 <Row>
+                     <Card>
+                         <p slot="title">
+-                            <Icon type="film-marker"></Icon> 活动推荐
++                            <Icon type="film-marker"></Icon>
++                            活动推荐
+                         </p>
+                         <article>
+                             <h1>正在筹备中，敬请期待...</h1>
+                         </article>
+                     </Card>
+                 </Row>
+-                <Row class="margin-top-10" >
+-                	<Card>
+-	                    <p slot="title">
+-	                        <Icon type="document-text"></Icon> 商家学习
+-	                    </p>
+-	                    <Collapse v-model="value2" accordion>
+-	                        <Panel name="1"> 1.注册店铺
+-	                            <p slot="content">
+-	                                <span class="font_size">1. 注册店铺:请务必正确填写店铺相关信息，若有法人请上传法人身份证照片，若无法人请上传店铺联系人身份证照片。</span><br/>
+-	                                <span class="font_size">2. 若三证合一，营业执照及组织机构代码证请上传同一证件。</span>
+-	                            </p>
+-	                        </Panel>
+-	                        <Panel name="2"> 2.店铺信息变更
+-	                            <p slot="content">
+-	                                <span class="font_size">1. 店铺注册后，若雪修改店铺相关信息，在【店铺设置】中修改。</span><br/>
+-	                                <span class="font_size">2. 若店铺审核未通过，更改信息后，由系统管理人员重新审核。</span><br/>
+-	                                <span class="font_size">3. 若店铺审核通过后，更改店铺信息，将不再进行二次审核。</span><br/>
+-	                                <span class="font_size">4. 请认真填写开户行信息，订单结算金额将汇入填写的银行账号。</span><br/>
+-	                                <span class="font_size">5. 店铺审核记录，点击店铺状态查看审核记录。</span>
+-	                            </p>
+-	                        </Panel>
+-	                        <Panel name="3"> 3.商品发布
+-	                            <p slot="content">
+-	                                <span class="font_size">1. 发布商品前，请先维护商品规格信息。在【规格管理】中设置，比如商品类目为衣服，可在规格管理中为衣服添加颜色、尺码等规格，并为颜色设置白色、黑色、灰色等规格值，为尺码设置S、M、L等规格值。</span><br/>
+-	                                <span class="font_size">2. 若发布的商品为虚拟物品，则无需维护商品规格。</span><br/>
+-	                                <span class="font_size">3. 商品添加成功后，需要系统人员进行审核，审核通过后的商品方可上架销售。</span><br/>
+-	                                <span class="font_size">4. 对已上架的商品进行修改，同样需要系统人员重新审核，审核通过后再次上架。</span><br/>
+-	                                <span class="font_size">5. 买家只能购买已上架的商品。</span>
+-	                            </p>
+-	                        </Panel>
+-	                    </Collapse>
+-	                </Card>
++                <Row class="margin-top-10">
++                    <Card>
++                        <p slot="title">
++                            <Icon type="document-text"></Icon>
++                            商家学习
++                        </p>
++                        <Collapse v-model="value2" accordion>
++                            <Panel name="1"> 1.注册店铺
++                                <p slot="content">
++                                    <span class="font_size">1. 注册店铺:请务必正确填写店铺相关信息，若有法人请上传法人身份证照片，若无法人请上传店铺联系人身份证照片。</span><br/>
++                                    <span class="font_size">2. 若三证合一，营业执照及组织机构代码证请上传同一证件。</span>
++                                </p>
++                            </Panel>
++                            <Panel name="2"> 2.店铺信息变更
++                                <p slot="content">
++                                    <span class="font_size">1. 店铺注册后，若雪修改店铺相关信息，在【店铺设置】中修改。</span><br/>
++                                    <span class="font_size">2. 若店铺审核未通过，更改信息后，由系统管理人员重新审核。</span><br/>
++                                    <span class="font_size">3. 若店铺审核通过后，更改店铺信息，将不再进行二次审核。</span><br/>
++                                    <span class="font_size">4. 请认真填写开户行信息，订单结算金额将汇入填写的银行账号。</span><br/>
++                                    <span class="font_size">5. 店铺审核记录，点击店铺状态查看审核记录。</span>
++                                </p>
++                            </Panel>
++                            <Panel name="3"> 3.商品发布
++                                <p slot="content">
++                                    <span class="font_size">1. 发布商品前，请先维护商品规格信息。在【规格管理】中设置，比如商品类目为衣服，可在规格管理中为衣服添加颜色、尺码等规格，并为颜色设置白色、黑色、灰色等规格值，为尺码设置S、M、L等规格值。</span><br/>
++                                    <span class="font_size">2. 若发布的商品为虚拟物品，则无需维护商品规格。</span><br/>
++                                    <span class="font_size">3. 商品添加成功后，需要系统人员进行审核，审核通过后的商品方可上架销售。</span><br/>
++                                    <span class="font_size">4. 对已上架的商品进行修改，同样需要系统人员重新审核，审核通过后再次上架。</span><br/>
++                                    <span class="font_size">5. 买家只能购买已上架的商品。</span>
++                                </p>
++                            </Panel>
++                        </Collapse>
++                    </Card>
+                 </Row>
+             </Col>
+         </Row>
+@@ -147,22 +155,22 @@
+ </template>
+ 
+ <script>
+-	import countUp from './components/countUp.vue';
+-	import inforCard from './components/inforCard.vue';
++    import countUp from './components/countUp.vue';
++    import inforCard from './components/inforCard.vue';
+ 
+     export default {
+         name: 'home',
+         components: {
+-        	countUp,
+-        	inforCard
++            countUp,
++            inforCard
+         },
+         data () {
+             return {
+-            	count: {
+-	                pendAudit: 0,
+-	                pendIsOn: 0,
+-	                onSale: 0
+-	            },
++                count: {
++                    pendAudit: 0,
++                    pendIsOn: 0,
++                    onSale: 0
++                },
+                 value3: '1',
+                 value2: '1',
+                 value1: '1',
+@@ -184,17 +192,17 @@
+             };
+         },
+         methods: {
+-            tosetshop() {
+-                this.$router.push({ path: '/shop/index'})
++            tosetshop () {
++                this.$router.push({path: '/shop/index'});
+             },
+-            getData() {
+-                this.$http.get("/user/home").then(
++            getData () {
++                this.$http.get('/user/home').then(
+                     function (resp) {
+-                        if (resp.data.code == '000') {
++                        if (resp.data.code === '000') {
+                             this.count.pendAudit = Number(resp.data.home.pendAudit);
+-                            this.count.pendIsOn  = Number(resp.data.home.pendIsOn);
++                            this.count.pendIsOn = Number(resp.data.home.pendIsOn);
+                             this.count.onSale = Number(resp.data.home.onSale);
+-                            
++
+                             this.pendConfirm = resp.data.home.pendConfirm;
+                             this.complete = resp.data.home.complete;
+                             this.refund = resp.data.home.refund;
+Index: src/views/order/order_info.vue
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/views/order/order_info.vue	(date 1525684172507)
++++ src/views/order/order_info.vue	(date 1525684172507)
+@@ -0,0 +1,238 @@
++<template>
++    <div>
++        <Row>
++            <Card>
++                <p slot="title">
++                    <Icon type="android-list"></Icon>
++                    订单基本信息
++                </p>
++                <Form :label-width="100">
++                    <Row>
++                        <Col span="6">
++                            <FormItem label="订单编号"><strong>{{orderform.order_id}} </strong></FormItem>
++                        </Col>
++                        <Col span="6">
++                            <FormItem label="订单标题"><strong>{{orderform.order_title}}</strong></FormItem>
++                        </Col>
++                        <Col span="6">
++                            <FormItem label="买家ID"><strong>{{orderform.user_id}} </strong></FormItem>
++                        </Col>
++                        <Col span='6'>
++                            <FormItem label="交易单号"><strong>{{orderform.trans_num}}</strong></FormItem>
++                        </Col>
++                    </Row>
++                    <Row>
++                        <Col span="6">
++                            <FormItem label="商品总价"><strong>{{orderform.total_price/100}}（元）</strong></FormItem>
++                        </Col>
++                        <Col span="6">
++                            <FormItem label="实际支付金额"><strong>{{orderform.actual_price/100}}（元）</strong></FormItem>
++                        </Col>
++                        <Col span="6">
++                            <FormItem label="支付方式"><strong>{{orderform.pay_type}}</strong></FormItem>
++                        </Col>
++                        <Col span='6'>
++                            <FormItem label="支付状态"><strong>{{orderform.pay_status}}</strong></FormItem>
++                        </Col>
++                    </Row>
++                    <Row>
++                        <Col span='6'>
++                            <FormItem label="订单状态"><strong>{{orderform.order_status}}</strong></FormItem>
++                        </Col>
++                        <Col span='6'>
++                            <FormItem label="收货人姓名"><strong>{{orderform.rp_name}}</strong></FormItem>
++                        </Col>
++                        <Col span='6'>
++                            <FormItem label="收货人电话"><strong>{{orderform.rp_mobile}}</strong></FormItem>
++                        </Col>
++                        <Col span='6'>
++                            <FormItem label="收货地址"><strong>{{orderform.rp_addr}}</strong></FormItem>
++                        </Col>
++                    </Row>
++                    <Row>
++                        <Col span='6'>
++                            <FormItem label="物流公司"><strong>{{orderform.exp_company}}</strong></FormItem>
++                        </Col>
++                        <Col span='6'>
++                            <FormItem label="物流单号"><strong>{{orderform.exp_num}}</strong></FormItem>
++                        </Col>
++                        <Col span='6'>
++                            <FormItem label="创建时间"><strong>{{orderform.create_time}}</strong></FormItem>
++                        </Col>
++                        <Col span='6'>
++                            <FormItem label="付款时间"><strong>{{orderform.pay_time}}</strong></FormItem>
++                        </Col>
++                    </Row>
++                    <Row>
++                        <Col span='6'>
++                            <FormItem label="发货时间"><strong>{{orderform.accept_time}}</strong></FormItem>
++                        </Col>
++                        <Col span='6'>
++                            <FormItem label="送达时间"><strong>{{orderform.confirm_time}}</strong></FormItem>
++                        </Col>
++                        <Col span='6'>
++                            <FormItem label="完成时间"><strong>{{orderform.complete_time}}</strong></FormItem>
++                        </Col>
++                        <Col span='6'>
++                            <FormItem label="买家留言"><strong>{{orderform.order_remark}}</strong></FormItem>
++                        </Col>
++                    </Row>
++                </Form>
++            </Card>
++        </Row>
++        <Row class="margin-top-10">
++            <Card>
++                <p slot="title">
++                    <Icon type="clipboard"></Icon>
++                    订单明细
++                </p>
++                <Table :data="data" :columns="columns" border></Table>
++            </Card>
++        </Row>
++    </div>
++</template>
++
++<script>
++    export default {
++        name: 'order_info',
++        data () {
++            return {
++                orderId: '',
++                columns: [
++                    {
++                        key: 'goods_title',
++                        align: 'center',
++                        title: '商品名称',
++                        ellipsis: true
++                    },
++                    {
++                        key: 'goods_spec',
++                        align: 'center',
++                        title: '规格',
++                        render: (h, params) => {
++                            const row = params.row;
++                            if (row.goods_spec) {
++                                return h('span', row.goods_spec);
++                            } else {
++                                return h('span', '无');
++                            }
++                        }
++                    },
++                    {
++                        key: 'unit_price',
++                        align: 'right',
++                        title: '单价(元)',
++                        render: (h, params) => {
++                            const row = params.row;
++                            const money = (row.unit_price / 100).toFixed(2);
++
++                            return h('strong', money);
++                        }
++                    },
++                    {
++                        key: 'amount',
++                        align: 'right',
++                        title: '数量'
++                    },
++                    {
++                        key: 'total_price',
++                        align: 'right',
++                        title: '总价(元)',
++                        render: (h, params) => {
++                            const row = params.row;
++                            const money = (row.total_price / 100).toFixed(2);
++
++                            return h('strong', money);
++                        }
++                    }
++                ],
++                data: [],
++                orderform: {}
++            };
++        },
++        mounted () {
++            this.init();
++        },
++        methods: {
++            init () {
++                this.orderId = this.$route.params.orderId;
++                this.getDetail();
++            },
++            getDetail () {
++                this.$http.get('/order/detail?order_id=' + this.orderId).then(
++                    function (resp) {
++                        if (resp.data.code === '000') {
++                            if (resp.data.record) {
++                                this.orderform = resp.data.record;
++                                switch (this.orderform.pay_status) {
++                                    case 0:
++                                        this.orderform.pay_status = '未支付';
++                                        break;
++                                    case 1:
++                                        this.orderform.pay_status = '已支付';
++                                        break;
++                                    case 2:
++                                        this.orderform.pay_status = '支付失败';
++                                        break;
++                                    default:
++                                        this.orderform.pay_status = this.orderform.pay_status;
++                                }
++
++                                switch (this.orderform.pay_type) {
++                                    case 0:
++                                        this.orderform.pay_type = '未支付';
++                                        break;
++                                    case 1:
++                                        this.orderform.pay_type = '支付宝';
++                                        break;
++                                    case 2:
++                                        this.orderform.pay_type = '微信';
++                                        break;
++                                    case 3:
++                                        this.orderform.pay_type = '敬老卡';
++                                        break;
++                                    default:
++                                        this.orderform.pay_type = this.orderform.pay_type;
++                                }
++
++                                switch (this.orderform.order_status) {
++                                    case 0:
++                                        this.orderform.order_status = '待付款';
++                                        break;
++                                    case 1:
++                                        this.orderform.order_status = '待发货';
++                                        break;
++                                    case 2:
++                                        this.orderform.order_status = '已发货';
++                                        break;
++                                    case 3:
++                                        this.orderform.order_status = '已送达';
++                                        break;
++                                    case 4:
++                                        this.orderform.order_status = '已完成';
++                                        break;
++                                    case 5:
++                                        this.orderform.order_status = '退款中';
++                                        break;
++                                    case 6:
++                                        this.orderform.order_status = '已退款';
++                                        break;
++                                    case 7:
++                                        this.orderform.order_status = '已取消';
++                                        break;
++                                    default:
++                                        this.orderform.order_status = this.orderform.order_status;
++                                }
++                            }
++                            if (resp.data.detail) {
++                                this.data = resp.data.detail;
++                            }
++                        } else {
++                            this.$Message.error(resp.data.msg);
++                        }
++                    }.bind(this)
++                );
++            }
++        }
++    };
++</script>
+Index: src/views/order/orderment.vue
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/views/order/orderment.vue	(revision 30)
++++ src/views/order/orderment.vue	(date 1525683159999)
+@@ -15,25 +15,25 @@
+                     <Row>
+                         <Form ref="searchForm" :model="searchform" inline>
+                             <FormItem label="订单编号" :label-width="60">
+-                                <Input v-model="searchform.title" placeholder="请输入订单编号查询"/>
++                                <Input v-model="searchform.order_id" placeholder="请输入订单编号查询"/>
+                             </FormItem>
+                             <FormItem label="订单状态" :label-width="60">
+-                                <Select v-model="searchform.failure" placeholder="请选择" style="width:150px;">
++                                <Select v-model="searchform.order_status" placeholder="请选择" style="width:150px;">
+                                     <Option v-for="item in failures" :value="item.value" :key="item.value">{{item.label
+                                         }}
+                                     </Option>
+                                 </Select>
+                             </FormItem>
+                             <FormItem label="支付方式" :label-width="60">
+-                                <Select v-model="searchform.way" placeholder="请选择" style="width:150px;">
++                                <Select v-model="searchform.pay_type" placeholder="请选择" style="width:150px;">
+                                     <Option v-for="item in ways" :value="item.value" :key="item.value">{{item.label
+                                         }}
+                                     </Option>
+                                 </Select>
+                             </FormItem>
+                             <FormItem style="padding-left: -20px;">
+-                                <Button @click="" type="primary" icon="search">搜索</Button>
+-                                <Button @click="" type="ghost">取消</Button>
++                                <Button @click="search" type="primary" icon="search">搜索</Button>
++                                <Button @click="cancelSearch" type="ghost">取消</Button>
+                             </FormItem>
+                         </Form>
+                     </Row>
+@@ -41,8 +41,9 @@
+                         <Table :data="data" :columns="columns" border></Table>
+                     </Row>
+                     <Row class="margin-top-10">
+-                        <Page :total.sync="total" :page-size="20" :current.sync="pageNumber" @on-change="setPageNum"
+-                              show-elevator show-total></Page>
++                        <Page :total.sync="total" :page-size="pageSize" :current.sync="pageNumber"
++                              @on-change="setPageNum"
++                              show-elevator show-total show-sizer @on-page-size-change="setPageSize"></Page>
+                     </Row>
+                 </Card>
+             </Col>
+@@ -51,25 +52,16 @@
+ </template>
+ 
+ <script>
+-
+     export default {
+         name: 'order_index',
+-        data() {
++        data () {
+             return {
++                modalTitle: '退款',
++                pageSize: 20,
+                 total: 0,
+                 pageNumber: 1,
+                 height: 590,
+-                data: [
+-                    {
+-                        order_num: '1233333333',
+-                        order_title: '小胖胖',
+-                        buy_id: 5211314,
+-                        order_meony: 9999999999,
+-                        order_source: '中国湖南',
+-                        order_status: '5'
+-
+-                    }
+-                ],
++                data: [],
+                 columns: [
+                     {
+                         title: '序号',
+@@ -78,90 +70,196 @@
+                         align: 'center'
+                     },
+                     {
+-                        key: 'order_num',
++                        key: 'order_id',
+                         align: 'center',
+                         title: '订单编号',
+-                        ellipsis:true
++                        ellipsis: true
+                     },
+                     {
+                         key: 'order_title',
+                         align: 'center',
+                         title: '订单标题',
++                        ellipsis: true,
+                         width: 120
+                     },
+                     {
+-                        key: 'buy_id',
++                        key: 'user_id',
+                         align: 'center',
+                         title: '买家ID',
+                         width: 120
+                     },
+                     {
+-                        key: 'order_meony',
++                        key: 'total_price',
+                         align: 'center',
+                         title: '订单金额',
+                         width: 120
+                     },
+                     {
+-                        key: 'order_source',
++                        key: 'source',
+                         align: 'center',
+                         title: '订单来源',
+                         width: 120
+                     },
+                     {
+                         title: '订单状态',
+-                        key: 'order_status',
+-                        align:'center',
+-                        width:110,
+-                        render(row,c,index){
+-                            if(row.order_status==0){
+-                                return '待付款';
+-                            }else if(row.order_status==1){
+-                                return '待接单';
+-                            }else if(row.order_status==2){
+-                                return '已接单';
+-                            }else if(row.order_status==3){
++                        align: 'center',
++                        key: 'order_status',
++                        render: (h, params) => {
++                            const row = params.row;
++                            if (row.order_status === 0) {
++                                return '待支付';
++                            } else if (row.order_status === 1) {
++                                return '代发货';
++                            } else if (row.order_status === 2) {
++                                return '已发货';
++                            } else if (row.order_status === 3) {
+                                 return '已送达';
+-                            }else if(row.order_status==4){
++                            } else if (row.order_status === 4) {
+                                 return '已完成';
+-                            }else if(row.order_status==5){
+-                                return '退款申请中';
+-                            }else if(row.order_status==6){
++                            } else if (row.order_status === 5) {
++                                return '退款中';
++                            } else if (row.order_status === 6) {
+                                 return '已退款';
+-                            }else if(row.order_status==7){
++                            } else if (row.order_status === 7) {
+                                 return '已取消';
+-                            }else{
++                            } else {
+                                 return '';
+                             }
+                         }
+                     },
+                     {
+                         key: 'op',
+-                        align: 'center',
++                        align: 'left',
++                        width: '150',
+                         title: '操作',
+-                        width: 220,
+                         render: (h, params) => {
+-                            let view = h('Button', {
+-                                props: {
+-                                    type: 'success',
+-                                    size: 'small',
+-                                },
+-                                style: {
+-                                    marginRight: '5px'
+-                                },
+-                                on: {
+-                                    click: () => {
+-                                        this.edit(params.row);
+-                                    }
+-                                }
+-                            }, '查看')
+-                            return h('div', [ view]);
++                            if (params.row.order_status === 1) {
++                                return h('div', [
++                                    h('Button', {
++                                        props: {
++                                            type: 'info',
++                                            size: 'small'
++                                        },
++                                        style: {
++                                            marginRight: '5px'
++                                        },
++                                        on: {
++                                            click: () => {
++                                                let argu = {orderId: params.row.order_id};
++                                                this.$router.push({
++                                                    name: 'order_info',
++                                                    params: argu
++                                                });
++                                            }
++                                        }
++                                    }, '查看'),
++                                    h('Button', {
++                                        props: {
++                                            type: 'primary',
++                                            size: 'small'
++                                        },
++                                        on: {
++                                            click: () => {
++                                                this.orderto(params.row.order_id);
++                                            }
++                                        }
++                                    }, '接单')
++                                ]);
++                            } else if (params.row.order_status === 2) {
++                                return h('div', [
++                                    h('Button', {
++                                        props: {
++                                            type: 'info',
++                                            size: 'small'
++                                        },
++                                        style: {
++                                            marginRight: '5px'
++                                        },
++                                        on: {
++                                            click: () => {
++                                                let argu = {orderId: params.row.order_id};
++                                                this.$router.push({
++                                                    name: 'order_info',
++                                                    params: argu
++                                                });
++                                            }
++                                        }
++                                    }, '查看'),
++                                    h('Button', {
++                                        props: {
++                                            type: 'warning',
++                                            size: 'small'
++                                        },
++                                        on: {
++                                            click: () => {
++                                                this.confirmService(params.row.order_id);
++                                            }
++                                        }
++                                    }, '确认送达')
++                                ]);
++                            } else if (params.row.order_status === 5) {
++                                return h('div', [
++                                    h('Button', {
++                                        props: {
++                                            type: 'info',
++                                            size: 'small'
++                                        },
++                                        style: {
++                                            marginRight: '5px'
++                                        },
++                                        on: {
++                                            click: () => {
++                                                let argu = {orderId: params.row.order_id};
++                                                this.$router.push({
++                                                    name: 'order_info',
++                                                    params: argu
++                                                });
++                                            }
++                                        }
++                                    }, '查看'),
++                                    h('Button', {
++                                        props: {
++                                            type: 'warning',
++                                            size: 'small'
++                                        },
++                                        on: {
++                                            click: () => {
++                                                // this.refundOrder(params.row.order_id);
++                                                let argu = {reportId: params.row.order_id};
++                                                this.$router.push({
++                                                    name: 'refund_info',
++                                                    params: argu
++                                                });
++                                            }
++                                        }
++                                    }, '退款')
++                                ]);
++                            } else {
++                                return h('div', [
++                                    h('Button', {
++                                        props: {
++                                            type: 'info',
++                                            size: 'small'
++                                        },
++                                        on: {
++                                            click: () => {
++                                                let argu = {orderId: params.row.order_id};
++                                                this.$router.push({
++                                                    name: 'order_info',
++                                                    params: argu
++                                                });
++                                            }
++                                        }
++                                    }, '查看')
++                                ]);
++                            }
+                         }
+                     }
+                 ],
+                 searchform: {
+-                    title: '',
+-                    failure: '',
+-                    way: ''
++                    order_id: '',
++                    order_status: '',
++                    pay_type: ''
+                 },
+                 failures: [
+                     {value: '', label: '全部'},
+@@ -182,11 +280,80 @@
+             };
+         },
+         methods: {
+-            setPageNum() {
+-                console.log('显示页数')
++            orderto (ID) {
++                this.$Modal.confirm({
++                    content: '<p>确认接单吗？</p>',
++                    loading: false,
++                    onOk: () => {
++                        this.$http.post('/order/take', {
++                            order_id: ID
++                        }).then(
++                            function (resp) {
++                                if (resp.data.code === '000') {
++                                    this.$Message.success('接单成功！请尽快送达');
++                                    this.getData();
++                                } else {
++                                    this.$Message.error('接单失败，请稍后再试');
++                                }
++                            }.bind(this)
++                        );
++                    }
++                });
++            },
++            confirmService (ID) {
++                this.$Modal.confirm({
++                    content: '<p>确认已送达吗？</p>',
++                    loading: false,
++                    onOk: () => {
++                        this.$http.post('/order/confirm', {
++                            order_id: ID
++                        }).then(
++                            function (resp) {
++                                if (resp.data.code === '000') {
++                                    this.$Message.success('确认成功！');
++                                    this.getData();
++                                } else {
++                                    this.$Message.error('确认失败，请稍后再试');
++                                }
++                            }.bind(this)
++                        );
++                    }
++                });
++            },
++            search () {
++                this.getData();
++            },
++            cancelSearch () {
++                this.searchform.order_id = '';
++                this.searchform.order_status = '';
++                this.searchform.pay_type = '';
++                this.getData();
++            },
++            getData () {
++                let params = this.searchform;
++                params['pageNumber'] = this.pageNumber;
++                params['pageSize'] = this.pageSize;
++                this.$http.get('/order/list', {
++                    params: params
++                }).then(
++                    function (resp) {
++                        // console.log(resp)
++                        this.data = resp.data.result;
++                        this.total = resp.data.total;
++                    }.bind(this)
++                );
++            },
++            setPageSize (size) {
++                this.pageSize = size;
++                this.getData();
++            },
++            setPageNum (num) {
++                this.pageNumber = num;
++                this.getData();
+             }
+         },
+-        created() {
++        mounted () {
++            this.getData();
+         }
+     };
+ </script>
+\ No newline at end of file
+Index: src/views/order/refund_info.vue
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/views/order/refund_info.vue	(date 1525683584338)
++++ src/views/order/refund_info.vue	(date 1525683584338)
+@@ -0,0 +1,145 @@
++<template>
++    <Row>
++        <Card>
++            <Form :label-width="80">
++                <Card>
++                    <p slot="title">
++                        买家信息
++                    </p>
++                    <Row>
++                        <Col span="12">
++                            <FormItem label="买家ID"><strong>{{Refundform.user_id}}</strong></FormItem>
++                        </Col>
++                        <Col span="12">
++                            <FormItem label="昵称"><strong>{{Refundform.mc_id}}</strong></FormItem>
++                        </Col>
++                        <Col span="12">
++                            <FormItem label="联系电话"><strong>{{Refundform.mc_id}}</strong></FormItem>
++                        </Col>
++                    </Row>
++                </Card>
++            </Form>
++            <Form style="margin-top: 20px;" :label-width="80">
++                <Card>
++                    <p slot="title">
++                        收件人信息
++                    </p>
++                    <Row>
++                        <Col span="12">
++                            <FormItem label="收件人姓名"><strong>{{Refundform.rp_name}} </strong></FormItem>
++                        </Col>
++                        <Col span="12">
++                            <FormItem label="收件人电话"><strong>{{Refundform.rp_mobile}}</strong></FormItem>
++                        </Col>
++                        <Col span="12">
++                            <FormItem label="收件人地址"><strong>{{Refundform.rp_addr}}</strong></FormItem>
++                        </Col>
++                    </Row>
++                </Card>
++            </Form>
++            <Form style="margin-top: 20px;" :label-width="90">
++                <Card>
++                    <p slot="title">
++                        订单信息
++                    </p>
++                    <Row>
++                        <Col span="24">
++                            <FormItem label="订单标题"><strong>{{Refundform.order_title}} </strong></FormItem>
++                        </Col>
++                        <Col span="12">
++                            <FormItem label="订单编号"><strong>{{Refundform.order_id}}</strong></FormItem>
++                        </Col>
++                        <Col span="12">
++                            <FormItem label="订单状态"><strong>{{Refundform.order_status}}</strong></FormItem>
++                        </Col>
++                        <Col span="12">
++                            <FormItem label="支付金额"><strong>{{Refundform.total_price}}</strong></FormItem>
++                        </Col>
++                        <Col span="12">
++                            <FormItem label="支付方式"><strong>{{Refundform.mc_id}}</strong></FormItem>
++                        </Col>
++                        <Col span="24">
++                            <FormItem label="退款原因"><strong>{{Refundform.cancel_reason}}</strong></FormItem>
++                        </Col>
++                        <Col span="12">
++                            <FormItem label="申请退款时间"><strong>{{Refundform.refund_apply_time}}</strong></FormItem>
++                        </Col>
++                        <Col span="12">
++                            <FormItem label="退款金额(元)"><strong>{{Refundform.refund_price}}</strong></FormItem>
++                        </Col>
++                        <Col span="24">
++                            <Col span="20">&nbsp;</Col>
++                            <Col span="4">
++                                <Button type="primary" @click="save">确定</Button>
++                            </Col>
++                        </Col>
++                    </Row>
++                </Card>
++            </Form>
++        </Card>
++    </Row>
++</template>
++<script>
++    export default {
++        name: 'refund_info',
++        data () {
++            return {
++                reportId: '',
++                Refundform: {
++                    user_id: '',
++                    rp_name: '',
++                    rp_mobile: '',
++                    rp_addr: '',
++                    order_title: '',
++                    order_id: '',
++                    order_status: '',
++                    cancel_reason: '',
++                    refund_apply_time: '',
++                    total_price: '',
++                    refund_price: ''
++                }
++            };
++        },
++        mounted () {
++            this.init();
++        },
++        methods: {
++            save () {
++                let rp = this.Refundform.refund_price;
++                this.$Modal.confirm({
++                    content: '<p>确定退款吗？退款金额' + rp + '元，确认后将退回到客户支付账户，确认后不可撤回</p>',
++                    loading: false,
++                    onOk: () => {
++                        this.$http.post('/order/refund', {
++                            order_id: this.reportId
++                        }).then(
++                            function (resp) {
++                                if (resp.data.code === '000') {
++                                    this.$Message.success(resp.data.msg);
++                                } else {
++                                    this.$Message.error(resp.data.msg);
++                                }
++                            }.bind(this)
++                        );
++                    }
++                });
++            },
++            init () {
++                this.reportId = this.$route.params.reportId;
++                this.getData();
++            },
++            getData () {
++                this.$http.get('/order/detail?order_id=' + this.reportId).then(
++                    function (resp) {
++                        if (resp.data.code === '000') {
++                            this.Refundform = resp.data.record;
++                            this.Refundform.order_status = resp.data.record.order_status === 5 ? '退款申请中' : '未结算';
++                        } else {
++                            this.$Message.error(resp.data.msg);
++                        }
++                    }.bind(this)
++                );
++            }
++        }
++    };
++</script>
+\ No newline at end of file
+Index: src/views/shop/index.vue
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/views/shop/index.vue	(revision 30)
++++ src/views/shop/index.vue	(date 1525684010519)
+@@ -4,7 +4,7 @@
+ <template>
+     <div>
+         <Row :gutter="10">
+-            <Col  span="5">
++            <Col span="5">
+                 <Card>
+                     <p slot="title">
+                         <Icon type="navicon-round"></Icon>
+@@ -37,7 +37,7 @@
+                             <Row>
+                                 <Col span="11">
+                                     <FormItem label="商家账号" prop="mc_account">
+-                                        <Input v-model="addElement.mc_account"/>
++                                        <Input v-model="addElement.mc_account" readonly/>
+                                     </FormItem>
+                                 </Col>
+                                 <Col span="1" style="text-align: center">&nbsp;</Col>
+@@ -68,7 +68,7 @@
+                                 </Col>
+                                 <Col span="1" style="text-align: center">&nbsp;</Col>
+                                 <Col span="11">
+-                                    <FormItem label="联系电话" prop="mc_phone">
++                                    <FormItem label="联系人电话" prop="mc_phone">
+                                         <Input v-model="addElement.mc_phone"/>
+                                     </FormItem>
+                                 </Col>
+@@ -147,19 +147,19 @@
+                             </Row>
+                             <Row>
+                                 <Col span="12">
+-                                    <FormItem label="工作日" prop="workDay">
+-                                        <Input v-model="addElement.workDay" placeholder="周一到周五"/>
++                                    <FormItem label="工作日" prop="sp_day">
++                                        <Input v-model="addElement.sp_day" placeholder="周一到周五"/>
+                                     </FormItem>
+                                 </Col>
+                                 <Col span="12">
+-                                    <FormItem label="营业时间" prop="BusinessHours">
+-                                        <Input v-model="addElement.BusinessHours"/>
++                                    <FormItem label="营业时间" prop="sp_hours">
++                                        <Input v-model="addElement.sp_hours"/>
+                                     </FormItem>
+                                 </Col>
+                             </Row>
+                             <Row>
+-                                <FormItem label="所属渠道" prop="channelTo">
+-                                    <Input v-model="addElement.channelTo"/>
++                                <FormItem label="所属渠道" prop="sp_name">
++                                    <Input v-model="addElement.sp_name" readonly/>
+                                 </FormItem>
+                             </Row>
+                             <Row>
+@@ -168,21 +168,21 @@
+                                 </FormItem>
+                             </Row>
+                             <Row>
+-                                <FormItem label="详细地址" prop="addressDetails">
+-                                    <Input v-model="addElement.addressDetails"/>
++                                <FormItem label="详细地址" prop="sp_addr">
++                                    <Input v-model="addElement.sp_addr"/>
+                                 </FormItem>
+                             </Row>
+                             <Row>
+-                                <FormItem label="店铺介绍" prop="shopintrod">
+-                                    <Input v-model="addElement.shopintrod" type="textarea"
++                                <FormItem label="店铺介绍" prop="sp_profile">
++                                    <Input v-model="addElement.sp_profile" type="textarea"
+                                            :autosize="{minRows: 3,maxRows: 5}"></Input>
+                                 </FormItem>
+                             </Row>
+                             <Row>
+                                 <Col span="24">
+                                     <FormItem>
+-                                        <Button type="primary">保存</Button>
+-                                        <Button type="ghost" style="margin-left: 8px">取消</Button>
++                                        <Button @click="saveForm" type="primary">保存</Button>
++                                        <!--<Button type="ghost" style="margin-left: 8px">取消</Button>-->
+                                     </FormItem>
+                                 </Col>
+                             </Row>
+@@ -198,30 +198,29 @@
+                         <Form :label-width="70" ref="addaccount" :model="addaccount" :rules="rules">
+                             <Row>
+                                 <Col span="12">
+-                                    <FormItem label="户名" prop="accountName">
+-                                        <Input v-model="addElement.accountName"/>
++                                    <FormItem label="户名" prop="accout_name">
++                                        <Input v-model="addaccount.accout_name"/>
+                                     </FormItem>
+                                 </Col>
+                             </Row>
+                             <Row>
+                                 <Col span="12">
+-                                    <FormItem label="开户行" prop="openaccount">
+-                                        <Input v-model="addElement.openaccount"/>
++                                    <FormItem label="开户行" prop="bank_name">
++                                        <Input v-model="addaccount.bank_name"/>
+                                     </FormItem>
+                                 </Col>
+                             </Row>
+                             <Row>
+                                 <Col span="12">
+-                                    <FormItem label="账号" prop="Toaccount">
+-                                        <Input v-model="addElement.Toaccount"/>
++                                    <FormItem label="账号" prop="bank_account">
++                                        <Input v-model="addaccount.bank_account"/>
+                                     </FormItem>
+                                 </Col>
+                             </Row>
+                             <Row>
+                                 <Col span="12">
+                                     <FormItem>
+-                                        <Button type="primary">保存</Button>
+-                                        <Button type="ghost" style="margin-left: 8px">取消</Button>
++                                        <Button @click="saveAccount" type="primary">保存</Button>
+                                     </FormItem>
+                                 </Col>
+                             </Row>
+@@ -230,119 +229,120 @@
+                 </Card>
+                 <Card v-show="set_information" class="set_store">
+                     <p slot="title">
+-                        <Icon type="navicon-round"></Icon>  附件信息
++                        <Icon type="navicon-round"></Icon>
++                        附件信息
+                     </p>
+-                    <Form :label-width="100">
+-                    	<Row>
+-	                        <FormItem label="组织机构代码证">
+-	                            <div class="upload-list" v-for="item in uploadList3">
+-	                                <template v-if="item.status === 'finished'">
+-	                                    <img :src="item.url">
+-	                                    <div class="upload-list-cover">
+-	                                        <Icon type="ios-eye-outline"
+-	                                              @click.native="handleView(item.url)"></Icon>
+-	                                        <Icon type="ios-trash-outline"
+-	                                              @click.native="handleCodes(item)"></Icon>
+-	                                    </div>
+-	                                </template>
+-	                                <template v-else>
+-	                                    <Progress v-if="item.showProgress" :percent="item.percentage"
+-	                                              hide-info></Progress>
+-	                                </template>
+-	                            </div>
+-	                            <Upload
+-	                                    name="url"
+-	                                    :show-upload-list="false"
+-	                                    :on-success="handleSuccess3"
+-	                                    :format="['jpg','jpeg','png']"
+-	                                    :max-size="2048"
+-	                                    :on-format-error="handleFormatError"
+-	                                    :on-exceeded-size="handleMaxSize"
+-	                                    :before-upload="handleBeforeUpload3"
+-	                                    type="drag"
+-	                                    :action.sync="action"
+-	                                    style="display: inline-block;width:58px;">
+-	                                <div style="width: 58px;height:58px;line-height: 58px;">
+-	                                    <Icon type="camera" size="20"></Icon>
+-	                                </div>
+-	                            </Upload>
+-	                        </FormItem>
+-                    	</Row>
+-                    	<Row>
+-	                        <FormItem label="营业执照">
+-	                            <div class="upload-list" v-for="item in uploadList4">
+-	                                <template v-if="item.status === 'finished'">
+-	                                    <img :src="item.url">
+-	                                    <div class="upload-list-cover">
+-	                                        <Icon type="ios-eye-outline"
+-	                                              @click.native="handleView(item.url)"></Icon>
+-	                                        <Icon type="ios-trash-outline"
+-	                                              @click.native="handlelicense(item)"></Icon>
+-	                                    </div>
+-	                                </template>
+-	                                <template v-else>
+-	                                    <Progress v-if="item.showProgress" :percent="item.percentage"
+-	                                              hide-info></Progress>
+-	                                </template>
+-	                            </div>
+-	                            <Upload
+-	                                    name="url"
+-	                                    :show-upload-list="false"
+-	                                    :on-success="handleSuccess4"
+-	                                    :format="['jpg','jpeg','png']"
+-	                                    :max-size="2048"
+-	                                    :on-format-error="handleFormatError"
+-	                                    :on-exceeded-size="handleMaxSize"
+-	                                    :before-upload="handleBeforeUpload4"
+-	                                    type="drag"
+-	                                    :action.sync="action"
+-	                                    style="display: inline-block;width:58px;">
+-	                                <div style="width: 58px;height:58px;line-height: 58px;">
+-	                                    <Icon type="camera" size="20"></Icon>
+-	                                </div>
+-	                            </Upload>
+-	                        </FormItem>
+-                    	</Row>
+-                    	<Row>
+-	                        <FormItem label="身份证">
+-	                            <div class="upload-list" v-for="item in uploadList5">
+-	                                <template v-if="item.status === 'finished'">
+-	                                    <img :src="item.url">
+-	                                    <div class="upload-list-cover">
+-	                                        <Icon type="ios-eye-outline"
+-	                                              @click.native="handleView(item.url)"></Icon>
+-	                                        <Icon type="ios-trash-outline"
+-	                                              @click.native="handleIdcard(item)"></Icon>
+-	                                    </div>
+-	                                </template>
+-	                                <template v-else>
+-	                                    <Progress v-if="item.showProgress" :percent="item.percentage"
+-	                                              hide-info></Progress>
+-	                                </template>
+-	                            </div>
+-	                            <Upload
+-	                                    name="url"
+-	                                    :show-upload-list="false"
+-	                                    :on-success="handleSuccess5"
+-	                                    :format="['jpg','jpeg','png']"
+-	                                    :max-size="2048"
+-	                                    :on-format-error="handleFormatError"
+-	                                    :on-exceeded-size="handleMaxSize"
+-	                                    :before-upload="handleBeforeUpload5"
+-	                                    type="drag"
+-	                                    :action.sync="action"
+-	                                    style="display: inline-block;width:58px;">
+-	                                <div style="width: 58px;height:58px;line-height: 58px;">
+-	                                    <Icon type="camera" size="20"></Icon>
+-	                                </div>
+-	                            </Upload>
+-	                        </FormItem>
+-                    	</Row>
+-	                    <Row>
++                    <Form :label-width="100" :model="docForm">
++                        <Row>
++                            <FormItem label="组织机构代码证">
++                                <div class="upload-list" v-for="item in docForm.orgList">
++                                    <template v-if="item.status === 'finished'">
++                                        <img :src="item.url">
++                                        <div class="upload-list-cover">
++                                            <Icon type="ios-eye-outline"
++                                                  @click.native="handleView(item.url)"></Icon>
++                                            <Icon type="ios-trash-outline"
++                                                  @click.native="handleCodes(item)"></Icon>
++                                        </div>
++                                    </template>
++                                    <template v-else>
++                                        <Progress v-if="item.showProgress" :percent="item.percentage"
++                                                  hide-info></Progress>
++                                    </template>
++                                </div>
++                                <Upload
++                                        name="url"
++                                        :show-upload-list="false"
++                                        :on-success="handleSuccess3"
++                                        :format="['jpg','jpeg','png']"
++                                        :max-size="2048"
++                                        :on-format-error="handleFormatError"
++                                        :on-exceeded-size="handleMaxSize"
++                                        :before-upload="handleBeforeUpload3"
++                                        type="drag"
++                                        :action.sync="action"
++                                        style="display: inline-block;width:58px;">
++                                    <div style="width: 58px;height:58px;line-height: 58px;">
++                                        <Icon type="camera" size="20"></Icon>
++                                    </div>
++                                </Upload>
++                            </FormItem>
++                        </Row>
++                        <Row>
++                            <FormItem label="营业执照">
++                                <div class="upload-list" v-for="item in docForm.licList">
++                                    <template v-if="item.status === 'finished'">
++                                        <img :src="item.url">
++                                        <div class="upload-list-cover">
++                                            <Icon type="ios-eye-outline"
++                                                  @click.native="handleView(item.url)"></Icon>
++                                            <Icon type="ios-trash-outline"
++                                                  @click.native="handlelicense(item)"></Icon>
++                                        </div>
++                                    </template>
++                                    <template v-else>
++                                        <Progress v-if="item.showProgress" :percent="item.percentage"
++                                                  hide-info></Progress>
++                                    </template>
++                                </div>
++                                <Upload
++                                        name="url"
++                                        :show-upload-list="false"
++                                        :on-success="handleSuccess4"
++                                        :format="['jpg','jpeg','png']"
++                                        :max-size="2048"
++                                        :on-format-error="handleFormatError"
++                                        :on-exceeded-size="handleMaxSize"
++                                        :before-upload="handleBeforeUpload4"
++                                        type="drag"
++                                        :action.sync="action"
++                                        style="display: inline-block;width:58px;">
++                                    <div style="width: 58px;height:58px;line-height: 58px;">
++                                        <Icon type="camera" size="20"></Icon>
++                                    </div>
++                                </Upload>
++                            </FormItem>
++                        </Row>
++                        <Row>
++                            <FormItem label="身份证">
++                                <div class="upload-list" v-for="item in docForm.idList">
++                                    <template v-if="item.status === 'finished'">
++                                        <img :src="item.url">
++                                        <div class="upload-list-cover">
++                                            <Icon type="ios-eye-outline"
++                                                  @click.native="handleView(item.url)"></Icon>
++                                            <Icon type="ios-trash-outline"
++                                                  @click.native="handleIdcard(item)"></Icon>
++                                        </div>
++                                    </template>
++                                    <template v-else>
++                                        <Progress v-if="item.showProgress" :percent="item.percentage"
++                                                  hide-info></Progress>
++                                    </template>
++                                </div>
++                                <Upload
++                                        name="url"
++                                        :show-upload-list="false"
++                                        :on-success="handleSuccess5"
++                                        :format="['jpg','jpeg','png']"
++                                        :max-size="2048"
++                                        :on-format-error="handleFormatError"
++                                        :on-exceeded-size="handleMaxSize"
++                                        :before-upload="handleBeforeUpload5"
++                                        type="drag"
++                                        :action.sync="action"
++                                        style="display: inline-block;width:58px;">
++                                    <div style="width: 58px;height:58px;line-height: 58px;">
++                                        <Icon type="camera" size="20"></Icon>
++                                    </div>
++                                </Upload>
++                            </FormItem>
++                        </Row>
++                        <Row>
+                             <FormItem>
+-                                <Button type="primary">保存</Button>
++                                <Button @click="savePicture" type="primary">保存</Button>
+                             </FormItem>
+-	                    </Row>
++                        </Row>
+                     </Form>
+                 </Card>
+             </Col>
+@@ -352,11 +352,11 @@
+         </Modal>
+     </div>
+ </template>
++
+ <script>
+-
+     export default {
+         name: 'index',
+-        data() {
++        data () {
+             return {
+                 set_information: false,
+                 set_account: false,
+@@ -365,29 +365,40 @@
+                 visible: false,
+                 uploadList: [],
+                 uploadList2: [],
+-                uploadList3: [],
+-                uploadList4: [],
+-                uploadList5: [],
+                 action: '',
+                 addaccount: {
+-                    accountName: '',
+-                    openaccount: '',
+-                    Toaccount: ''
++                    accout_name: '',
++                    bank_name: '',
++                    bank_account: ''
++                },
++                docForm: {
++                    orgList: [],
++                    licList: [],
++                    idList: [],
++                    sp_orgcode: '',
++                    sp_buslicense: '',
++                    sp_identity: ''
+                 },
+                 addElement: {
+                     shopThumb: '',
++                    shopImg: '',
+                     mc_account: '',
+                     mc_linkphone: '',
+                     mc_phone: '',
+                     sp_name: '',
+                     mc_linkman: '',
+                     mc_idnum: '',
+-                    workDay: '',
+-                    BusinessHours: '',
+-                    channelTo: '',
++                    sp_day: 'www',
++                    sp_hours: 'eeee',
+                     areas: [],
+-                    addressDetails: '',
+-                    shopintrod: ''
++                    sp_addr: '',
++                    sp_profile: '',
++                    sp_province_code: '',
++                    sp_city_code: '',
++                    sp_area_code: '',
++                    sp_province: '',
++                    sp_city: '',
++                    sp_area: ''
+                 },
+                 rules: {
+                     mc_account: [
+@@ -408,107 +419,196 @@
+                     mc_idnum: [
+                         {required: true, message: '请输入身份证号', trigger: 'blur'}
+                     ],
+-                    channelTo: [
+-                        {required: true, message: '请输入所属渠道', trigger: 'blur'}
+-                    ],
+-                    areas: [
+-                        {required: true, message: '请选择城市', trigger: 'blur'}
+-                    ],
+-                    addressDetails: [
++                    sp_addr: [
+                         {required: true, message: '请输入地址', trigger: 'blur'}
+                     ],
+-                    accountName: [
++                    accout_name: [
+                         {required: true, message: '请输入户名', trigger: 'blur'}
+                     ],
+-                    openaccount: [
++                    bank_name: [
+                         {required: true, message: '请输入开户行', trigger: 'blur'}
+                     ],
+-                    Toaccount: [
++                    bank_account: [
+                         {required: true, message: '请输入账户', trigger: 'blur'}
++                    ],
++                    areas: [
++                        {required: true, message: '请输入所在城市', type: 'array', trigger: 'change'}
+                     ]
+                 }
+             };
+         },
+         methods: {
+-            getData() {
+-                this.$http.get("/shop/info").then(
++            saveForm () {
++                this.$refs.addElement.validate((valid) => {
++                    if (valid) {
++                        let areas = this.addElement.areas;
++                        if (areas.length > 0) {
++                            this.addElement.sp_province_code = areas[0].code;
++                            this.addElement.sp_city_code = areas[1].code;
++                            this.addElement.sp_area_code = areas[2].code;
++                        }
++                        let data = this.$refs.addElement.model;
++                        this.$http.post('/shop/save', data).then(
++                            function (resp) {
++                                if (resp.data.code === '000') {
++                                    this.$Message.success(resp.data.msg);
++                                } else {
++                                    this.$Message.error(resp.data.msg);
++                                }
++                            }.bind(this)
++                        );
++                    } else {
++                        this.$Message.error('请输入内容');
++                    }
++                });
++            },
++            savePicture () {
++                let idList = this.docForm.idList;
++                let idStr = new Array;
++                for (let i = 0; i < idList.length; i++) {
++                    let idFile = idList[i];
++                    idStr[i] = idFile.name;
++                }
++                this.docForm.sp_identity = idStr.join(',');
++                let params = this.docForm;
++                this.$http.post('/shop/updateDoc', params).then(
++                    function (resp) {
++                        if (resp.data.code === '000') {
++                            this.$Message.success(resp.data.msg);
++                        } else {
++                            this.$Message.error(resp.data.msg);
++                        }
++                    }.bind(this)
++                );
++            },
++            saveAccount () {
++                this.$refs.addaccount.validate((valid) => {
++                    if (valid) {
++                        let data = this.addaccount;
++
++                        this.$http.post('/shop/updateAcc', data).then(
++                            function (resp) {
++                                if (resp.data.code === '000') {
++                                    this.$Message.success(resp.data.msg);
++                                } else {
++                                    this.$Message.error(resp.data.msg);
++                                }
++                            }.bind(this)
++                        );
++                    } else {
++                        this.$Message.error('请输入内容');
++                    }
++                });
++            },
++            getData () {
++                this.$http.get('/shop/info').then(
+                     function (resp) {
+-                        if (resp.data.code == '000') {
+-                            this.addElement = resp.data.mc
+-                            this.addElement.sp_name = resp.data.shop.sp_name
+-                            console.log(resp.data)
++                        if (resp.data.code === '000') {
++                            let AArray = new Array();
++                            if (this.addElement.sp_province === '') {
++                                AArray[0] = resp.data.shop.sp_province_code;
++                            }
++                            if (this.addElement.sp_city === '') {
++                                AArray[1] = resp.data.shop.sp_city_code;
++                            }
++                            if (this.addElement.sp_area === '') {
++                                AArray[2] = resp.data.shop.sp_area_code;
++                            }
++                            this.addElement.areas = AArray;
++                            if (resp.data.shopImg) {
++                                this.uploadList = resp.data.shopImg;
++                            }
++                            if (resp.data.shopThumb) {
++                                this.uploadList2 = resp.data.shopThumb;
++                            }
++
++                            if (resp.data.orgImg) {
++                                this.docForm.orgList = resp.data.orgImg;
++                            }
++                            if (resp.data.licImg) {
++                                this.docForm.licList = resp.data.licImg;
++                            }
++                            if (resp.data.idImg) {
++                                this.docForm.idList = resp.data.idImg;
++                            }
++                            this.addaccount = resp.data.acc;
++                            this.addElement = resp.data.mc;
++                            this.addElement.sp_name = resp.data.shop.sp_name;
++                            this.addElement.sp_addr = resp.data.shop.sp_addr;
++                            this.addElement.sp_day = resp.data.shop.sp_day;
++                            this.addElement.sp_hours = resp.data.shop.sp_hours;
++                            this.addElement.sp_profile = resp.data.shop.sp_profile;
+                         } else {
+                             this.$Message.error(resp.data.msg);
+                         }
+                     }.bind(this));
+             },
+-            handleView(url) {
++            handleView (url) {
+                 this.imgName = url;
+                 this.visible = true;
+             },
+-            handleRemove(file) {
++            handleRemove (file) {
+                 const fileList = this.uploadList;
+                 this.uploadList.splice(fileList.indexOf(file), 1);
+             },
+-            handleRemoveContent(file) {
++            handleRemoveContent (file) {
+                 const fileList = this.uploadList2;
+                 this.uploadList2.splice(fileList.indexOf(file), 1);
+             },
+-            handleCodes(file) {
+-                const fileList = this.uploadList3;
+-                this.uploadList3.splice(fileList.indexOf(file), 1);
++            handleCodes (file) {
++                const fileList = this.docForm.orgList;
++                this.docForm.orgList.splice(fileList.indexOf(file), 1);
+             },
+-            handlelicense(file) {
+-                const fileList = this.uploadList4;
+-                this.uploadList4.splice(fileList.indexOf(file), 1);
++            handlelicense (file) {
++                const fileList = this.docForm.licList;
++                this.docForm.licList.splice(fileList.indexOf(file), 1);
+             },
+-            handleIdcard(file) {
+-                const fileList = this.uploadList5;
+-                this.uploadList5.splice(fileList.indexOf(file), 1);
++            handleIdcard (file) {
++                const fileList = this.docForm.idList;
++                this.docForm.idList.splice(fileList.indexOf(file), 1);
+             },
+-            handleSuccess(response, file, fileList) {
++            handleSuccess (response, file, fileList) {
+                 file.url = response.filePath;
+                 file.name = response.fileName;
+-                this.addElement.shopThumb = response.fileName;
++                this.addElement.shopImg = response.fileName;
+                 this.uploadList = fileList;
+             },
+-            handleSuccess2(response, file, fileList) {
++            handleSuccess2 (response, file, fileList) {
+                 file.url = response.filePath;
+                 file.name = response.fileName;
+-                this.addElement.content = response.fileName;
++                this.addElement.shopThumb = response.fileName;
+                 this.uploadList2 = fileList;
+             },
+-            handleSuccess3(response, file, fileList) {
++            handleSuccess3 (response, file, fileList) {
+                 file.url = response.filePath;
+                 file.name = response.fileName;
+-                this.addElement.content = response.fileName;
+-                this.uploadList3 = fileList;
++                this.docForm.sp_orgcode = response.fileName;
++                this.docForm.orgList = fileList;
+             },
+-            handleSuccess4(response, file, fileList) {
++            handleSuccess4 (response, file, fileList) {
+                 file.url = response.filePath;
+                 file.name = response.fileName;
+-                this.addElement.content = response.fileName;
+-                this.uploadList4 = fileList;
++                this.docForm.sp_buslicense = response.fileName;
++                this.docForm.licList = fileList;
+             },
+-            handleSuccess5(response, file, fileList) {
++            handleSuccess5 (response, file, fileList) {
+                 file.url = response.filePath;
+                 file.name = response.fileName;
+-                this.addElement.content = response.fileName;
+-                this.uploadList5 = fileList;
++                this.docForm.idList = fileList;
+             },
+-            handleFormatError(file) {
++            handleFormatError (file) {
+                 this.$Notice.warning({
+                     title: '图片格式不正确。',
+                     desc: file.name + ' 不是jpg文件或者png文件.'
+                 });
+             },
+-            handleMaxSize(file) {
++            handleMaxSize (file) {
+                 this.$Notice.warning({
+                     title: 'Exceeding file size limit',
+                     desc: '文件 ' + file.name + ' 太大，不能超过2M。'
+                 });
+             },
+-            handleBeforeUpload() {
++            handleBeforeUpload () {
+                 const check = this.uploadList.length < 1;
+                 if (!check) {
+                     this.$Notice.warning({
+@@ -517,7 +617,7 @@
+                 }
+                 return check;
+             },
+-            handleBeforeUpload2() {
++            handleBeforeUpload2 () {
+                 const check = this.uploadList2.length < 1;
+                 if (!check) {
+                     this.$Notice.warning({
+@@ -526,8 +626,8 @@
+                 }
+                 return check;
+             },
+-            handleBeforeUpload3() {
+-                const check = this.uploadList3.length < 1;
++            handleBeforeUpload3 () {
++                const check = this.docForm.orgList.length < 1;
+                 if (!check) {
+                     this.$Notice.warning({
+                         title: '最多只能上传1张图片。'
+@@ -535,8 +635,8 @@
+                 }
+                 return check;
+             },
+-            handleBeforeUpload4() {
+-                const check = this.uploadList4.length < 1;
++            handleBeforeUpload4 () {
++                const check = this.docForm.licList.length < 1;
+                 if (!check) {
+                     this.$Notice.warning({
+                         title: '最多只能上传1张图片。'
+@@ -544,38 +644,38 @@
+                 }
+                 return check;
+             },
+-            handleBeforeUpload5() {
+-                const check = this.uploadList5.length < 1;
++            handleBeforeUpload5 () {
++                const check = this.docForm.idList.length < 2;
+                 if (!check) {
+                     this.$Notice.warning({
+-                        title: '最多只能上传1张图片。'
++                        title: '最多只能上传2张图片。'
+                     });
+                 }
+                 return check;
+             },
+             toDetails (res) {
+-                if (res == 1) {
++                if (res === 1) {
+                     this.display_card = true;
+                     this.set_account = false;
+                     this.set_information = false;
+                 }
+-                if (res == 2) {
++                if (res === 2) {
+                     this.display_card = false;
+                     this.set_account = true;
+                     this.set_information = false;
+                 }
+-                if (res == 3) {
++                if (res === 3) {
+                     this.display_card = false;
+                     this.set_account = false;
+                     this.set_information = true;
+                 }
+             }
+         },
+-        mounted() {
++        mounted () {
+             this.action = this.$http.defaults.baseURL + '/upload';
+             this.getData();
+         },
+-        created() {
++        created () {
+ 
+         }
+ 
+Index: src/views/spec/common/data.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/views/spec/common/data.js	(revision 30)
++++ src/views/spec/common/data.js	(date 1525683267249)
+@@ -6,95 +6,34 @@
+         align: 'center'
+     },
+     {
+-        key: 'title',
++        key: 'sname',
+         align: 'center',
+         title: '规格名称',
+-        ellipsis:true
++        ellipsis: true
+     },
+     {
+-        key: 'validity',
++        key: 'remark',
+         align: 'center',
+         title: '说明',
+-        width:120
++        width: 120
+     },
+     {
+-        key: 'cname',
++        key: 'cat_name',
+         align: 'center',
+         width: 150,
+-        ellipsis:true,
++        ellipsis: true,
+         title: '所属类目'
+     },
+     {
+-        title: '操作',
+-        align: 'center',
+-        width: 220,
+-        key: 'handle',
+-        handle: [ 'setIntv', 'editD', 'delete']
+-    }
+-];
+-export const columnsgood = [
+-    {
+-        title: '序号',
+-        type: 'index',
+-        width: 70,
+-        align: 'center'
+-    },
+-    {
+-        key: 'number',
+-        align: 'center',
+-        title: '商品编号',
+-        width:120
+-    },
+-    {
+-        key: 'title',
+-        align: 'center',
+-        title: '商品名称',
+-        ellipsis:true
+-    },
+-    {
+-        key: 'validity',
+-        align: 'center',
+-        title: '总库存',
+-        width:120
+-    },
+-    {
+-        key: 'cname',
+-        align: 'center',
+-        width: 150,
+-        ellipsis:true,
+-        title: '状态'
+-    },
+-    {
+-        key: 'expand',
+-        align: 'center',
+-        title: '是否上架',
+-        width:100,
+-        render: (h, params) => {
+-            if (params.row.expand === '1') {
+-                return h('span', '是');
+-            }
+-            return h('span', '否');
+-        }
+-    },
+-    {
+-        key: 'begin_time',
+-        align: 'center',
+-        width: 170,
+-        title: '开始时间'
+-    },
+-    {
+         title: '操作',
+         align: 'center',
+         width: 220,
+         key: 'handle',
+-        handle: [ 'setIntv', 'editD', 'delete']
++        handle: ['setIntv', 'editD', 'delete']
+     }
+ ];
+ 
+-
+ const tableData = {
+-    columnsgood: columnsgood,
+     columns: columns
+ };
+-
+ export default tableData;
+\ No newline at end of file
+Index: src/views/spec/specifications.vue
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/views/spec/specifications.vue	(revision 30)
++++ src/views/spec/specifications.vue	(date 1525683832874)
+@@ -16,7 +16,7 @@
+                     <Row>
+                         <Form ref="searchForm" :model="searchform" inline>
+                             <FormItem label="规格名称" :label-width="60">
+-                                <Input v-model="searchform.title" placeholder="请输入规格名称查询"/>
++                                <Input v-model="searchform.name" placeholder="请输入规格名称查询"/>
+                             </FormItem>
+                             <FormItem>
+                                 <Button @click="search" type="primary" icon="search">搜索</Button>
+@@ -25,11 +25,13 @@
+                         </Form>
+                     </Row>
+                     <Row>
+-                        <can-edit-table refs="table" :height="height" v-model="data" @on-delete="remove" @on-edit="edit" @on-setIntv="setIntv"
++                        <can-edit-table refs="table" :height="height" v-model="data" @on-delete="remove" @on-edit="edit"
++                                        @on-setIntv="setIntv"
+                                         :columns-list="columns"></can-edit-table>
+                     </Row>
+                     <Row class="margin-top-10">
+-                        <Page :total.sync="total" :page-size="pageSize" :current.sync="pageNumber" @on-change="setPageNum"
++                        <Page :total.sync="total" :page-size="pageSize" :current.sync="pageNumber"
++                              @on-change="setPageNum"
+                               show-elevator show-total show-sizer @on-page-size-change="setPageSize"></Page>
+                     </Row>
+                 </Card>
+@@ -37,12 +39,13 @@
+             <Col span="5" class="padding-left-10">
+                 <Card>
+                     <p slot="title">
+-                        <Icon type="navicon-round"></Icon>  分类目录
++                        <Icon type="navicon-round"></Icon>
++                        分类目录
+                     </p>
+                     <Tabs type="card">
+                         <TabPane label="商品分类">
+                             <div class="classification-con" v-bind:style="{ height: treeHeight + 'px' }">
+-                                <Tree :data="categories" @on-select-change="setCategory"></Tree>
++                                <Tree :data="channels" @on-select-change="setChannel"></Tree>
+                             </div>
+                         </TabPane>
+                     </Tabs>
+@@ -60,68 +63,94 @@
+         components: {
+             canEditTable
+         },
+-        data() {
++        data () {
+             return {
+-                categories: [],
++                channels: [],
+                 pageNumber: 1,
+-                pageSize:20,
++                pageSize: 20,
+                 total: 0,
+                 columns: [],
+-                data: [
+-                    {
+-                        title: '222',
+-                        validity: '我爱你',
+-                        cname: '我不知道'
+-                    }
+-                ],
++                data: [],
+                 searchform: {
+-                    title: ''
++                    name: ''
+                 }
+             };
+         },
+-        computed:{
+-        	height(){
+-        		return this.$store.state.app.containerHeight2;
+-        	},
+-        	treeHeight(){
+-        		return this.$store.state.app.rightTreeHeight;
+-        	}
++        computed: {
++            height () {
++                return this.$store.state.app.containerHeight2;
++            },
++            treeHeight () {
++                return this.$store.state.app.rightTreeHeight;
++            }
+         },
+         methods: {
+-            setCategory() {
+-                console.log('右侧目录')
++            getChannels () {
++                this.$http.get('/spec/category').then(
++                    function (resp) {
++                        this.channels = resp.data.result;
++                    }.bind(this)
++                );
+             },
+-            remove() {
+-                console.log( '删除' )
++            setChannel () {
++
++            },
++            remove (rows, index) {
++                this.$http.post('/spec/remove', {sid: rows[index].sid}).then(
++                    function (resp) {
++                        if (resp.data.code === '000') {
++                            this.$Message.success(resp.data.msg);
++                            this.getData();
++                        } else {
++                            this.$Message.error(resp.data.msg);
++                        }
++                    }.bind(this)
++                );
+             },
+-            edit() {
+-                console.log( '编辑' )
++            edit () {
++
+             },
+-            setIntv() {
+-                console.log( '设置属性' )
++            setIntv () {
++
+             },
+-            setPageNum(num) {
++            setPageNum (num) {
+                 this.pageNumber = num;
+                 this.getData();
+             },
+-            setPageSize(size){
+-            	this.pageSize = size;
+-            	this.getData();
++            setPageSize (size) {
++                this.pageSize = size;
++                this.getData();
+             },
+-            getData(){
+-            	
++            getData () {
++                let params = this.searchform;
++                params['pageNumber'] = this.pageNumber;
++                params['pageSize'] = this.pageSize;
++
++                this.$http.get('/spec/list',
++                    {
++                        params: params
++                    }
++                ).then(
++                    function (resp) {
++                        // console.log(resp)
++                        this.data = resp.data.result;
++                        this.total = resp.data.total;
++                    }.bind(this));
+             },
+-            search(){
+-            	this.pageNumber = 1;
++            search () {
+                 this.getData();
+             },
+-            cancelSearch(){
+-            	this.title = '';
+-            	this.getData();
++            cancelSearch () {
++                this.searchform.name = '';
++                this.getData();
+             }
+         },
+-        created() {
++        created () {
+             this.columns = tableData.columns;
++        },
++        mounted () {
++            this.getChannels();
++            this.getData();
+         }
+     };
+ </script>
+\ No newline at end of file
+Index: src/views/login.less
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/views/login.less	(revision 30)
++++ src/views/login.less	(date 1525657977443)
+@@ -25,5 +25,9 @@
+             text-align: center;
+             color: #c3c3c3;
+         }
++        .login-tip:hover{
++            text-decoration:underline ;
++            cursor: pointer;
++        }
+     }
+ }
+\ No newline at end of file
+Index: src/views/login.vue
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/views/login.vue	(revision 30)
++++ src/views/login.vue	(date 1525683514842)
+@@ -13,24 +13,22 @@
+                 <div class="form-con">
+                     <Form ref="loginForm" :model="form" :rules="rules">
+                         <FormItem prop="userName">
+-                            <Input v-model="form.userName" placeholder="请输入用户名">
+-                            <span slot="prepend">
+-                                    <Icon :size="16" type="person"></Icon>
++                            <Input v-model="form.userName" placeholder="请输入用户名"/>
++                                <span slot="prepend">
++                                        <Icon :size="16" type="person"></Icon>
+                                 </span>
+-                            </Input>
+                         </FormItem>
+                         <FormItem prop="password">
+-                            <Input type="password" v-model="form.password" placeholder="请输入密码">
++                            <Input type="password" v-model="form.password" placeholder="请输入密码"/>
+                             <span slot="prepend">
+                                     <Icon :size="14" type="locked"></Icon>
+                                 </span>
+-                            </Input>
+                         </FormItem>
+                         <FormItem>
+                             <Button @click="handleSubmit" type="primary" long>登录</Button>
+                         </FormItem>
+                     </Form>
+-                    <p class="login-tip">请输入用户名及密码登录</p>
++                    <p @click="toRegister" class="login-tip">还没有账号？注册一个</p>
+                 </div>
+             </Card>
+         </div>
+@@ -39,9 +37,8 @@
+ 
+ <script>
+     import Cookies from 'js-cookie';
+-
+     export default {
+-        data() {
++        data () {
+             return {
+                 form: {
+                     userName: '',
+@@ -58,20 +55,23 @@
+             };
+         },
+         methods: {
+-            handleSubmit() {
++            toRegister () {
++                this.$router.push({path: '/register', name: 'register'});
++            },
++            handleSubmit () {
+                 this.$refs.loginForm.validate((valid) => {
+                     if (valid) {
+                         let param = new URLSearchParams();
+-                        param.append("username", this.form.userName);
+-                        param.append("password", this.form.password);
++                        param.append('username', this.form.userName);
++                        param.append('password', this.form.password);
+                         param.append('rememberMe', false);
+ 
+-                        this.$http.post("/user/login", param).then(
++                        this.$http.post('/user/login', param).then(
+                             function (resp) {
+-                                if (resp.data.code == "000") {
++                                if (resp.data.code === '000') {
+                                     Cookies.set('user', this.form.userName);
+                                     Cookies.set('access', resp.data.role);
+-                                    //this.$store.commit('setAvator', 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3448484253,3685836170&fm=27&gp=0.jpg');
++                                    // this.$store.commit('setAvator', 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3448484253,3685836170&fm=27&gp=0.jpg');
+ 
+                                     this.$router.push({
+                                         name: 'home_index'
+Index: src/views/Main.vue
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/views/Main.vue	(revision 30)
++++ src/views/Main.vue	(date 1525684010481)
+@@ -4,23 +4,25 @@
+ <template>
+     <div class="main" :class="{'main-hide-text': shrink}">
+         <div class="sidebar-menu-con" :style="{width: shrink?'60px':'200px', overflow: shrink ? 'visible' : 'auto'}">
+-            <shrinkable-menu 
+-                :shrink="shrink"
+-                @on-change="handleSubmenuChange"
+-                :theme="menuTheme" 
+-                :before-push="beforePush"
+-                :open-names="openedSubmenuArr"
+-                :menu-list="menuList">
++            <shrinkable-menu
++                    :shrink="shrink"
++                    @on-change="handleSubmenuChange"
++                    :theme="menuTheme"
++                    :before-push="beforePush"
++                    :open-names="openedSubmenuArr"
++                    :menu-list="menuList">
+                 <div slot="top" class="logo-con">
+-                	<a type="text" v-show="!shrink"><span class="title">所依商城</span></a>
+-                    <img v-show="shrink" src="https://xiaoi-img.oss-cn-qingdao.aliyuncs.com/assets/image/logo.png" key="min-logo" />
++                    <a type="text" v-show="!shrink"><span class="title">所依商城</span></a>
++                    <img v-show="shrink" src="https://xiaoi-img.oss-cn-qingdao.aliyuncs.com/assets/image/logo.png"
++                         key="min-logo"/>
+                 </div>
+             </shrinkable-menu>
+         </div>
+         <div class="main-header-con" :style="{paddingLeft: shrink?'60px':'200px'}">
+             <div class="main-header">
+                 <div class="navicon-con">
+-                    <Button :style="{transform: 'rotateZ(' + (this.shrink ? '-90' : '0') + 'deg)'}" type="text" @click="toggleClick">
++                    <Button :style="{transform: 'rotateZ(' + (this.shrink ? '-90' : '0') + 'deg)'}" type="text"
++                            @click="toggleClick">
+                         <Icon type="navicon" size="32"></Icon>
+                     </Button>
+                 </div>
+@@ -34,15 +36,16 @@
+                     <lock-screen></lock-screen>
+                     <message-tip v-model="mesCount"></message-tip>
+                     <theme-switch></theme-switch>
+-                    
++
+                     <div class="user-dropdown-menu-con">
+                         <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
+-                    		<Button type="ghost" shape="circle" icon="log-out" @click="handleClickUserDropdown('loginout')"></Button>
+-                    		<Button type="text" @click="handleClickUserDropdown('ownSpace')">
+-                    			<div style="width:72px;float:left;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+-                                	{{ userName }}
+-                    			</div>
+-                    		</Button>
++                            <Button type="ghost" shape="circle" icon="log-out"
++                                    @click="handleClickUserDropdown('loginout')"></Button>
++                            <Button type="text" @click="handleClickUserDropdown('ownSpace')">
++                                <div style="width:72px;float:left;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
++                                    {{ userName }}
++                                </div>
++                            </Button>
+                         </Row>
+                     </div>
+                 </div>
+@@ -51,17 +54,18 @@
+                 <tags-page-opened :pageTagsList="pageTagsList"></tags-page-opened>
+             </div>
+         </div>
+-        
++
+         <div class="single-page-con" :style="{left: shrink?'60px':'200px'}" ref="pageContent">
+-        	<happy-scroll color="rgba(51,51,51,0.7)" scroll-top="20" size="5" resize smaller-move-h="end" smaller-move-v="end">
+-	            <div class="single-page">
+-	                <keep-alive :include="cachePage">
+-	                    <router-view></router-view>
+-	                </keep-alive>
+-	            </div>
++            <happy-scroll color="rgba(51,51,51,0.7)" scroll-top="20" size="5" resize smaller-move-h="end"
++                          smaller-move-v="end">
++                <div class="single-page">
++                    <keep-alive :include="cachePage">
++                        <router-view></router-view>
++                    </keep-alive>
++                </div>
+             </happy-scroll>
+         </div>
+-        
++
+     </div>
+ </template>
+ <script>
+@@ -74,7 +78,7 @@
+     import themeSwitch from './main-components/theme-switch/theme-switch.vue';
+     import Cookies from 'js-cookie';
+     import util from '@/libs/util.js';
+-    
++
+     export default {
+         components: {
+             shrinkableMenu,
+@@ -87,22 +91,22 @@
+         },
+         data () {
+             return {
+-            	scrollTop: 0,
+-            	scrollLeft: 0,
++                scrollTop: 0,
++                scrollLeft: 0,
+                 shrink: false,
+                 userName: '',
+                 isFullScreen: false,
+                 openedSubmenuArr: this.$store.state.app.openedSubmenuArr,
+-                timer:null
++                timer: null
+             };
+         },
+         mounted () {
+             this.init();
+-          	let that = this; 
+-          	this.$store.commit('changeHeight', this);
+-          	
++            let that = this;
++            this.$store.commit('changeHeight', this);
++
+             window.addEventListener('resize', () => {
+-	            this.$store.commit('changeHeight', that);
++                this.$store.commit('changeHeight', that);
+             });
+         },
+         created () {
+@@ -134,8 +138,8 @@
+             mesCount () {
+                 return this.$store.state.app.messageCount;
+             },
+-            titleTheme(){
+-            	return this.$store.state.app.themeColor;
++            titleTheme () {
++                return this.$store.state.app.themeColor;
+             }
+         },
+         methods: {
+@@ -147,24 +151,30 @@
+                 }
+                 this.userName = Cookies.get('user');
+                 this.checkTag(this.$route.name);
+-                
++
+                 this.timer = setInterval(() => {
+-	                this.getMsg();
+-	            }, 600000);
++                    this.getMsg();
++                }, 600000);
+             },
+             toggleClick () {
+                 this.shrink = !this.shrink;
+             },
+             handleClickUserDropdown (name) {
+-            	if (name === 'ownSpace') {
++                if (name === 'ownSpace') {
+                     util.openNewPage(this, 'ownspace_index');
+                     this.$router.push({
+                         name: 'ownspace_index'
+                     });
+                 } else if (name === 'loginout') {
+-                	// 退出登录
+-                    this.$store.commit('logout', this);
+-                    this.$store.commit('clearOpenedSubmenu');
++                    // 退出登录
++                    this.$Modal.confirm({
++                        content: '<p>确定退出吗？</p>',
++                        loading: false,
++                        onOk: () => {
++                            this.$store.commit('logout', this);
++                            this.$store.commit('clearOpenedSubmenu');
++                        }
++                    });
+                 }
+             },
+             checkTag (name) {
+@@ -186,25 +196,25 @@
+             fullscreenChange (isFullScreen) {
+                 // console.log(isFullScreen);
+             },
+-            getMsg(){
+-            	this.$http.get('/order/msg').then(
+-                	function (resp) {
+-                		if(resp.data.code==='000'){
+-	            			this.$store.commit('updateOrderMsgList', resp.data.result);
+-	            			
+-	            			let count = resp.data.result.length;
+-	            			this.$store.commit('setMessageCount', count);
+-		            		if(count > 0){
+-					            this.$router.push({
+-					                name: 'message_index'
+-					            });
+-			        		}
+-                		}else{
+-                			console.error(resp.data.msg);
+-                		}
+-                	}.bind(this)
++            getMsg () {
++                this.$http.get('/order/msg').then(
++                    function (resp) {
++                        if (resp.data.code === '000') {
++                            this.$store.commit('updateOrderMsgList', resp.data.result);
++
++                            let count = resp.data.result.length;
++                            this.$store.commit('setMessageCount', count);
++                            if (count > 0) {
++                                this.$router.push({
++                                    name: 'message_index'
++                                });
++                            }
++                        } else {
++                            this.$Message.error(resp.data.msg);
++                        }
++                    }.bind(this)
+                 ).catch(function (error) {
+-                    console.log(error);
++                    alert(error);
+                 });
+             }
+         },
+Index: src/views/register/common/eheader.vue
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/views/register/common/eheader.vue	(date 1525678902781)
++++ src/views/register/common/eheader.vue	(date 1525678902781)
+@@ -0,0 +1,14 @@
++<template>
++    <div style="background-color: #ffffff">
++        <Row style="background-color: #ffffff; width: 1200px; margin: 0 auto;">
++            <Col :span="16">
++                <img style="width:327px; height: 94px;" src="../../../images/reg_logo.jpg" alt="">
++            </Col>
++            <Col style="margin-top: 3%" :span="8">
++                <a style="font-size: 13px;margin-left: 51%;color: #666;cursor: pointer;" href="" class="blk">返回首页</a> |
++                <a style="font-size: 13px;color: #666;cursor: pointer;" href="#" class="blk">客服中心</a><br>
++                如注册遇到问题请发送邮件至：<strong style="font-size:14px;">service@xiaoyi99.com</strong>
++            </Col>
++        </Row>
++    </div>
++</template>
+\ No newline at end of file
+Index: src/views/register/common/protocol.less
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/views/register/common/protocol.less	(date 1525680584340)
++++ src/views/register/common/protocol.less	(date 1525680584340)
+@@ -0,0 +1,3 @@
++.head_border{
++  background: url("../../../images/top.png");
++}
+Index: src/views/register/protocol.vue
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/views/register/protocol.vue	(date 1525679568144)
++++ src/views/register/protocol.vue	(date 1525679568144)
+@@ -0,0 +1,30 @@
++<style lang="less">
++    @import './common/protocol.less';
++</style>
++
++<template>
++    <div class="content">
++        <eheader></eheader>
++        <Row class="head_border">
++
++        </Row>
++    </div>
++</template>
++
++<script>
++    import eheader from './common/eheader';
++    export default {
++        name: 'protocol',
++        components: {
++            eheader
++        },
++        data () {
++            return {
++
++            };
++        },
++        methods: {
++
++        }
++    };
++</script>
+\ No newline at end of file
+diff --git src/images/reg_logo.jpg src/images/reg_logo.jpg
+new file mode 100644
+index 0000000000000000000000000000000000000000..a35f7a596de132352f17e5cb6e96d3dbb4343892
+GIT binary patch
+literal 18842
+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
+TVPyW7Xl+8%-v5pN_5S|_{~GwA
+
+diff --git src/images/top.png src/images/top.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..80462ee95192eacd351659bc5a5808d991d8f257
+GIT binary patch
+literal 1051
+zc$|Gx&1=*^6p#3URC=!>7}A3koMa}So6uNxvs=61*0Npb9y~ZnX1k$HCMHuitv3<W
+zlL|d}^XkbzKo7kMUcCq&iXeh`(6e}Pvfb1or4uqAZ{F{{-@K2fE6X>hr!Gwif-v1)
+zYIga0n*SHhpX2k}2i8ZvTx6|2Tcraw!Wj|jA@zyaj`2F_5*%*d`#|P7=uy<`vwr86
+z6VO=3rH)+0sZfsjg(Ahl24SL4)}zFge!bh1#3*#7HKPMNsYiy<(oRNJcb0p>&PHH|
+z(!vdKzHqpKm@q6B@n(`cg)5EiI(%P>6-gYcunku_Al2`zh#t*|XvhW#po&DxmXTpt
+zmU>-OA<`9y6r=%UJG$;bC{BjNy=CFR={6T9zWB+NhK!|-qKrl(d8ElSTUU^6+X_?_
+zRRvrF<l70u1xWJQ%0iRmK^CPfqKR0Zu}`;{D@oN8;<VE_G@Rs<K=F_%1x^(tLnV%t
+zN;_v=GB{Z~?`@|<>5`moWdYB}VD^ZslcA*|XXD(?BAyhy*`&c%OcK^^x)Q&U!zgqH
+zfvRgpU;;hRbzoyY`2-T6hhgZW5F*nwDm%yF&6Za84CpQL522RcKsB>o^E6YhK?60^
+z3foR{hLeC)*yta&aU$07GJ+Y+dX#QfRj@LojOIg{ik>&lx;VEMB_SQ<*UB_a*pe)|
+zPr}8F#^N~6PIL?htlK_T2>~#$5U@1e1ioQlps5gJe}FU{Thas{9(n&kopK4ckydmZ
+zXayMa>IMV91_44u2iW#C;0MIe^$;4C8AuAJsQgz-m5A48xjk$QemHC`lJI`Yc;j5%
+z{q&tT9cVY}z2dWvU%P)^otk<%^IUjw`F;P&vpX}7&pz1`^L;7b|FZjA_$r*45mtYk
+U&*#4Vl*@K)x0ai48h0Q51%A3ooB#j-
+

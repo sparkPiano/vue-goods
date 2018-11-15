@@ -1,0 +1,958 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/src/views/goods/goodsment.vue" line="511" />
+    <bookmark url="file://$PROJECT_DIR$/src/views/goods/goodsment.vue" line="519" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" readonly="true" id="8bb16515-eb52-40a4-99d6-aa8af738846a" name="Default" comment="shop project">
+      <change beforePath="$PROJECT_DIR$/build/webpack.base.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/webpack.base.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/finance/finance_info.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/finance/finance_info.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/goods/goodsment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/goods/goodsment.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/order/refund_info.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/register/protocol.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/register/protocol.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/register/toRegister.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/register/toRegister.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/shop/common" beforeDir="true" />
+      <change beforePath="$PROJECT_DIR$/src/views/shop/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/shop/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/spec/specifications.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/spec/specifications.vue" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExportToHTMLSettings">
+    <option name="OUTPUT_DIRECTORY" value="E:\goods_project\exportToHTML" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="goods_project" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="login.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/login.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="646">
+              <caret line="34" column="10" selection-start-line="34" selection-start-column="10" selection-end-line="34" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="goodsment.vue" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/views/goods/goodsment.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="343">
+              <caret line="898" column="40" selection-start-line="898" selection-start-column="40" selection-end-line="898" selection-end-column="40" />
+              <folding>
+                <element signature="n#style#0;n#Select#0;n#FormItem#1;n#Form#0;n#Row#0;n#Card#0;n#Col#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Select#0;n#FormItem#2;n#Form#0;n#Row#0;n#Card#0;n#Col#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#FormItem#3;n#Form#0;n#Row#0;n#Card#0;n#Col#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Col#0;n#Row#0;n#FormItem#1;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#ul#0;n#Col#0;n#Row#0;n#FormItem#1;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#ul#1;n#Col#0;n#Row#0;n#FormItem#1;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#li#0;n#ul#1;n#Col#0;n#Row#0;n#FormItem#1;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#Row#5;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#style#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#5;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#5;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#Row#6;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#style#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#6;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#6;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#Row#7;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#style#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#7;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#7;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#Row#8;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#style#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#5;n#Form#0;n#Modal#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#5;n#Form#0;n#Modal#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#6;n#Form#0;n#Modal#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#6;n#Form#0;n#Modal#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#7;n#Form#0;n#Modal#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#7;n#Form#0;n#Modal#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#Modal#2;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#td#1;n#tr#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#td#2;n#tr#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>商品数量</find>
+      <find>handleBeforeUpload2</find>
+      <find>validPrice</find>
+      <find>validStock</find>
+      <find>goods_stocks</find>
+      <find>this.addform.goods_stocks</find>
+      <find>this.addform.priceStr</find>
+      <find>propvalids</find>
+      <find>priceStr</find>
+      <find>skuTable</find>
+      <find>getStocks</find>
+      <find>alreadySetSkuVals</find>
+      <find>getAlreadySetSkuVals</find>
+      <find>setting_sku_bestprice</find>
+      <find>skubestprice</find>
+      <find>skubestpricemin</find>
+      <find>getYkj</find>
+      <find>change</find>
+      <find>selectspec</find>
+      <find>native</find>
+      <find>change123</find>
+      <find>setting_sku_stock</find>
+      <find>$('#skuTable').html('');</find>
+      <find>skuTypeArr</find>
+      <find>querySpecValues</find>
+      <find>select_checkboxz</find>
+      <find>sku_value</find>
+      <find>setChannel</find>
+      <find>on-select-change</find>
+      <find>script</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>report_id</replace>
+      <replace />
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="E:/adadad" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/build/webpack.dev.config.js" />
+        <option value="$PROJECT_DIR$/src/views/home/home.less" />
+        <option value="$PROJECT_DIR$/src/app.vue" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/src/views/shop/common/pictureT.vue" />
+        <option value="$PROJECT_DIR$/src/views/spec/specifications.less" />
+        <option value="$PROJECT_DIR$/src/views/main-components/theme-switch/theme-switch.vue" />
+        <option value="$PROJECT_DIR$/src/views/spec/common/canEditTable.vue" />
+        <option value="$PROJECT_DIR$/src/views/goods/goodsment.less" />
+        <option value="$PROJECT_DIR$/src/views/order/orderment.less" />
+        <option value="$PROJECT_DIR$/src/views/finance/financeindex.less" />
+        <option value="$PROJECT_DIR$/src/views/shop/index.less" />
+        <option value="$PROJECT_DIR$/src/views/xhaoyou.vue" />
+        <option value="$PROJECT_DIR$/src/styles/common.less" />
+        <option value="$PROJECT_DIR$/src/views/login.less" />
+        <option value="$PROJECT_DIR$/src/views/register/common/header.vue" />
+        <option value="$PROJECT_DIR$/src/views/finance/financeindex.vue" />
+        <option value="$PROJECT_DIR$/src/views/Main.vue" />
+        <option value="$PROJECT_DIR$/src/views/order/order_info.vue" />
+        <option value="$PROJECT_DIR$/src/views/register/common/toRegister.vue" />
+        <option value="$PROJECT_DIR$/src/views/register/common/ok.vue" />
+        <option value="$PROJECT_DIR$/src/views/register/common/protocol.less" />
+        <option value="$PROJECT_DIR$/src/views/own-space/own-space.vue" />
+        <option value="$PROJECT_DIR$/src/views/register/common/eheader.vue" />
+        <option value="$PROJECT_DIR$/src/views/register/toRegister.vue" />
+        <option value="$PROJECT_DIR$/src/views/order/refund_info.vue" />
+        <option value="$PROJECT_DIR$/src/views/order/orderment.vue" />
+        <option value="$PROJECT_DIR$/src/views/spec/common/data.js" />
+        <option value="$PROJECT_DIR$/src/views/register/protocol.vue" />
+        <option value="$PROJECT_DIR$/src/views/message/message.vue" />
+        <option value="$PROJECT_DIR$/src/views/spec/specifications.vue" />
+        <option value="$PROJECT_DIR$/src/views/finance/finance_info.vue" />
+        <option value="$PROJECT_DIR$/src/views/shop/index.vue" />
+        <option value="$PROJECT_DIR$/src/views/protocol.vue" />
+        <option value="$PROJECT_DIR$/src/router/router.js" />
+        <option value="$PROJECT_DIR$/src/libs/util.js" />
+        <option value="$PROJECT_DIR$/src/router/index.js" />
+        <option value="$PROJECT_DIR$/src/main.js" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/build/webpack.base.config.js" />
+        <option value="$PROJECT_DIR$/src/views/login.vue" />
+        <option value="$PROJECT_DIR$/src/views/home/home.vue" />
+        <option value="$PROJECT_DIR$/src/views/register/ok.vue" />
+        <option value="$PROJECT_DIR$/src/views/untill.js" />
+        <option value="$PROJECT_DIR$/src/views/goods/goodsment.vue" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
+    <package-json value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-10" />
+    <option name="y" value="432" />
+    <option name="width" value="1926" />
+    <option name="height" value="1080" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="goods_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="goods_project" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="goods_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="goods_project" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="goods_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="goods_project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="goods_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="goods_project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="goods_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="goods_project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="home" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="goods_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="goods_project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="register" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="goods_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="goods_project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="shop" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.prettier" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.prettier" value="project" />
+    <property name="node.js.selected.package.eslint" value="E:\goods_project\node_modules\eslint" />
+    <property name="node.js.selected.package.prettier" value="E:\goods_project\node_modules\prettier" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="settings.github" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\goods_project\src\views\register" />
+      <recent name="E:\goods_project\src\views" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\goods_project\src\views" />
+      <recent name="E:\goods_project\src\images" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>C:\Users\peo\AppData\Roaming\Subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="SvnFileUrlMappingImpl">
+    <option name="myMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\goods_project" />
+          <option name="myCopyRoot" value="E:\goods_project" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+    <option name="myMoreRealMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\goods_project" />
+          <option name="myCopyRoot" value="E:\goods_project" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8bb16515-eb52-40a4-99d6-aa8af738846a" name="Default" comment="" />
+      <created>1524467975053</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1524467975053</updated>
+      <workItem from="1524467976451" duration="14127000" />
+      <workItem from="1524532042369" duration="29790000" />
+      <workItem from="1524618707668" duration="33813000" />
+      <workItem from="1524704598330" duration="23016000" />
+      <workItem from="1524791213001" duration="30969000" />
+      <workItem from="1524877565860" duration="26772000" />
+      <workItem from="1525223245762" duration="30895000" />
+      <workItem from="1525309449385" duration="31308000" />
+      <workItem from="1525395700690" duration="27980000" />
+      <workItem from="1525655258658" duration="33824000" />
+      <workItem from="1525741940521" duration="16435000" />
+      <workItem from="1525827030060" duration="1245000" />
+      <workItem from="1525914222657" duration="4751000" />
+      <workItem from="1526000904410" duration="5912000" />
+      <workItem from="1526259925305" duration="2747000" />
+      <workItem from="1526346327420" duration="827000" />
+      <workItem from="1526433335051" duration="1326000" />
+      <workItem from="1526435585717" duration="1832000" />
+      <workItem from="1526518468475" duration="10058000" />
+      <workItem from="1526605986190" duration="2965000" />
+      <workItem from="1526865936561" duration="6058000" />
+      <workItem from="1526951526204" duration="4549000" />
+      <workItem from="1527037702486" duration="25651000" />
+      <workItem from="1527124051395" duration="598000" />
+      <workItem from="1527234383972" duration="687000" />
+      <workItem from="1527560006304" duration="689000" />
+      <workItem from="1527645827162" duration="2568000" />
+      <workItem from="1527734832668" duration="11990000" />
+      <workItem from="1527816999120" duration="19717000" />
+      <workItem from="1527847150647" duration="72000" />
+      <workItem from="1528076949291" duration="1029000" />
+      <workItem from="1528100633783" duration="1219000" />
+      <workItem from="1528161526698" duration="10796000" />
+      <workItem from="1528249114794" duration="14401000" />
+      <workItem from="1528334293794" duration="3296000" />
+      <workItem from="1528420962263" duration="88000" />
+      <workItem from="1528682363968" duration="747000" />
+      <workItem from="1528689243904" duration="5566000" />
+      <workItem from="1528859062841" duration="45000" />
+      <workItem from="1528860937343" duration="1476000" />
+      <workItem from="1528954718471" duration="681000" />
+      <workItem from="1528960092253" duration="35000" />
+      <workItem from="1528969493419" duration="483000" />
+      <workItem from="1529043293052" duration="675000" />
+      <workItem from="1529545192017" duration="1342000" />
+      <workItem from="1529573906253" duration="612000" />
+      <workItem from="1529631965885" duration="176000" />
+      <workItem from="1529977964336" duration="1432000" />
+      <workItem from="1529980079753" duration="37185000" />
+      <workItem from="1530151506467" duration="22545000" />
+      <workItem from="1530234580743" duration="22455000" />
+      <workItem from="1530493579154" duration="92864000" />
+      <workItem from="1530848254311" duration="614000" />
+      <workItem from="1531101850560" duration="2467000" />
+      <workItem from="1531191670156" duration="367000" />
+      <workItem from="1531204237828" duration="39000" />
+      <workItem from="1531208215074" duration="8259000" />
+      <workItem from="1531271677831" duration="6543000" />
+      <workItem from="1531361117185" duration="13637000" />
+      <workItem from="1531442620855" duration="1896000" />
+      <workItem from="1531711897110" duration="13668000" />
+      <workItem from="1531790897991" duration="18991000" />
+      <workItem from="1531878046088" duration="21615000" />
+      <workItem from="1531962901720" duration="28188000" />
+      <workItem from="1532049406827" duration="13009000" />
+      <workItem from="1532067173648" duration="13603000" />
+    </task>
+    <task id="LOCAL-00001" summary="4-27下午13:15code update">
+      <created>1524806182250</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1524806182250</updated>
+    </task>
+    <task id="LOCAL-00002" summary="shop project">
+      <created>1525684281468</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1525684281468</updated>
+    </task>
+    <task id="LOCAL-00003" summary="shop project">
+      <created>1525684352767</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1525684352767</updated>
+    </task>
+    <task id="LOCAL-00004" summary="shop project">
+      <created>1525684403252</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1525684403252</updated>
+    </task>
+    <task id="LOCAL-00005" summary="shop project">
+      <created>1525684461265</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1525684461265</updated>
+    </task>
+    <task id="LOCAL-00006" summary="shop project">
+      <created>1525684549476</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1525684549476</updated>
+    </task>
+    <task id="LOCAL-00007" summary="shop project">
+      <created>1525684584183</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1525684584183</updated>
+    </task>
+    <task id="LOCAL-00008" summary="shop project">
+      <created>1525684647929</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1525684647929</updated>
+    </task>
+    <task id="LOCAL-00009" summary="shop project">
+      <created>1525760528923</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1525760528923</updated>
+    </task>
+    <task id="LOCAL-00010" summary="shop project">
+      <created>1525762465155</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1525762465155</updated>
+    </task>
+    <task id="LOCAL-00011" summary="shop project">
+      <created>1525762475550</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1525762475550</updated>
+    </task>
+    <task id="LOCAL-00012" summary="shop project">
+      <created>1526541472030</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1526541472030</updated>
+    </task>
+    <task id="LOCAL-00013" summary="规格管理">
+      <created>1527842234498</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1527842234498</updated>
+    </task>
+    <task id="LOCAL-00014" summary="规格管理">
+      <created>1528077367531</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1528077367531</updated>
+    </task>
+    <task id="LOCAL-00015" summary="规格管理 最终修改sname中的props">
+      <created>1528171153508</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1528171153508</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="765246000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49891067" visible="true" weight="0.15226555" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49947312" weight="0.32897604" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.50052685" side_tool="true" weight="0.32824427" />
+      <window_info anchor="bottom" id="Version Control" order="11" weight="0.32824427" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info id="npm" order="2" sideWeight="0.50108933" side_tool="true" weight="0.12012645" />
+      <window_info id="Structure" order="1" sideWeight="0.50108933" side_tool="true" weight="0.12012645" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3576881" />
+      <window_info id="Favorites" order="3" sideWeight="0.50108933" side_tool="true" weight="0.12012645" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="TypeScript" order="10" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Messages" order="8" sideWeight="0.49947312" weight="0.40239912" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32824427" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="4-27下午13:15code update" />
+    <MESSAGE value="shop project" />
+    <MESSAGE value="规格管理" />
+    <MESSAGE value="规格管理 最终修改sname中的props" />
+    <option name="LAST_COMMIT_MESSAGE" value="规格管理 最终修改sname中的props" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="23" />
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/views/goods/goodsment.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16416">
+          <caret line="864" column="26" lean-forward="true" selection-start-line="864" selection-start-column="26" selection-end-line="864" selection-end-column="26" />
+          <folding>
+            <element signature="n#style#0;n#Select#0;n#FormItem#1;n#Form#0;n#Row#0;n#Card#0;n#Col#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Select#0;n#FormItem#2;n#Form#0;n#Row#0;n#Card#0;n#Col#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#FormItem#3;n#Form#0;n#Row#0;n#Card#0;n#Col#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Col#0;n#Row#0;n#FormItem#1;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#ul#0;n#Col#0;n#Row#0;n#FormItem#1;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#ul#1;n#Col#0;n#Row#0;n#FormItem#1;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#li#0;n#ul#1;n#Col#0;n#Row#0;n#FormItem#1;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#Row#5;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#5;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#5;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#Row#6;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#6;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#6;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#Row#7;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#7;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#7;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#Row#8;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#5;n#Form#0;n#Modal#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#5;n#Form#0;n#Modal#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#6;n#Form#0;n#Modal#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#6;n#Form#0;n#Modal#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#7;n#Form#0;n#Modal#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#7;n#Form#0;n#Modal#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#Modal#2;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#td#1;n#tr#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#td#2;n#tr#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/order/refund_info.vue" />
+    <entry file="file://$PROJECT_DIR$/src/views/spec/common/data.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="24" selection-start-column="24" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3477">
+          <caret line="183" column="60" selection-start-line="183" selection-start-column="60" selection-end-line="183" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/styles/common.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-167">
+          <caret line="22" column="22" lean-forward="true" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shop_project.patch">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="3095" column="17" lean-forward="true" selection-start-line="3095" selection-start-column="17" selection-end-line="3095" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/iview/src/components/icon/icon.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/own-space/own-space.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="18" column="28" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/order/orderment.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="369">
+          <caret line="283" column="40" selection-start-line="283" selection-start-column="40" selection-end-line="287" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/order/order_info.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-10">
+          <caret line="177" column="94" lean-forward="true" selection-start-line="177" selection-start-column="94" selection-end-line="177" selection-end-column="94" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/international/international.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-29" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/finance/financeindex.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="801">
+          <caret line="123" column="68" selection-start-line="123" selection-start-column="60" selection-end-line="123" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/access/access.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-29" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/message/message.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="47">
+          <caret line="4" column="10" lean-forward="true" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/spec/common/canEditTable.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1311">
+          <caret line="228" column="58" selection-start-line="228" selection-start-column="54" selection-end-line="228" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/register/toRegister.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="602">
+          <caret line="80" column="50" lean-forward="true" selection-start-line="80" selection-start-column="50" selection-end-line="82" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/less/bin/lessc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="620">
+          <caret line="36" column="21" selection-start-line="36" selection-start-column="20" selection-end-line="36" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/home/components/customTable.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="15" column="21" lean-forward="true" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/shop/index.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="1" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/iview-area/src/lib/components/al-selector.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1561">
+          <caret line="369" column="8" selection-start-line="369" selection-start-column="8" selection-end-line="371" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="1125" column="7" lean-forward="true" selection-start-line="1125" selection-start-column="7" selection-end-line="1125" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/spec/specifications.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="58" column="89" selection-start-line="58" selection-start-column="82" selection-end-line="58" selection-end-column="89" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/register/protocol.vue" />
+    <entry file="file://$PROJECT_DIR$/src/views/finance/finance_info.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="22" column="70" selection-start-line="22" selection-start-column="60" selection-end-line="22" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/vue-router/dist/vue-router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="565" column="2" selection-start-line="565" selection-start-column="2" selection-end-line="565" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/store/modules/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1368" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/vue-router/types/router.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="24" column="2" selection-start-line="24" selection-start-column="2" selection-end-line="24" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/register/protocol.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="30" column="77" selection-start-line="30" selection-start-column="77" selection-end-line="30" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/styles/table.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="26" column="21" lean-forward="true" selection-start-line="26" selection-start-column="21" selection-end-line="26" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/home/home.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-377" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" column="17" selection-start-line="1" selection-start-column="15" selection-end-line="1" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="35" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Main.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2705">
+          <caret line="45" column="47" selection-start-line="45" selection-start-column="39" selection-end-line="45" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/js-cookie/src/js.cookie.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="760">
+          <caret line="85" column="66" lean-forward="true" selection-start-line="85" selection-start-column="66" selection-end-line="85" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/vue-router/types/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/libs/util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-417">
+          <caret line="20" column="3" lean-forward="true" selection-start-line="20" selection-start-column="3" selection-end-line="20" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.eslintrc.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="1" lean-forward="true" selection-start-column="1" selection-end-line="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/router/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="67" column="25" selection-start-line="67" selection-start-column="20" selection-end-line="67" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/router/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="63" column="27" selection-start-line="63" selection-start-column="27" selection-end-line="63" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/webpack.prod.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="25" lean-forward="true" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/webpack.dev.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="722">
+          <caret line="38" column="37" selection-start-line="38" selection-start-column="33" selection-end-line="38" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="31" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package-lock.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-209">
+          <caret line="16" column="23" lean-forward="true" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="75" column="21" lean-forward="true" selection-start-line="75" selection-start-column="21" selection-end-line="75" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/webpack.base.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="21" column="9" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/home/home.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="31">
+          <caret line="192" column="10" selection-end-line="230" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/register/ok.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="17" column="45" lean-forward="true" selection-start-line="17" selection-start-column="45" selection-end-line="17" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/login.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="34" column="10" selection-start-line="34" selection-start-column="10" selection-end-line="34" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/shop/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2164">
+          <caret line="441" column="22" selection-start-line="441" selection-start-column="22" selection-end-line="441" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/untill.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="753">
+          <caret line="61" column="3" selection-start-line="61" selection-start-column="3" selection-end-line="61" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/goods/goodsment.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="898" column="40" selection-start-line="898" selection-start-column="40" selection-end-line="898" selection-end-column="40" />
+          <folding>
+            <element signature="n#style#0;n#Select#0;n#FormItem#1;n#Form#0;n#Row#0;n#Card#0;n#Col#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Select#0;n#FormItem#2;n#Form#0;n#Row#0;n#Card#0;n#Col#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#FormItem#3;n#Form#0;n#Row#0;n#Card#0;n#Col#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Col#0;n#Row#0;n#FormItem#1;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#ul#0;n#Col#0;n#Row#0;n#FormItem#1;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#ul#1;n#Col#0;n#Row#0;n#FormItem#1;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#li#0;n#ul#1;n#Col#0;n#Row#0;n#FormItem#1;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#Row#5;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#5;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#5;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#Row#6;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#6;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#6;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#Row#7;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#7;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#7;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#Row#8;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#5;n#Form#0;n#Modal#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#5;n#Form#0;n#Modal#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#6;n#Form#0;n#Modal#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#6;n#Form#0;n#Modal#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#7;n#Form#0;n#Modal#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#0;n#Col#0;n#Row#7;n#Form#0;n#Modal#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#Modal#2;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#td#1;n#tr#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#td#2;n#tr#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
